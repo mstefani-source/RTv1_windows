@@ -30,29 +30,46 @@ void	ft_set_canvas(t_scene *rtv)
 
 t_object	*ft_set_objects(char *line)
 {
-	t_object	*object1, *object2, *object3;
+	t_object	*object1, *object2, *object3, *object4, *light_dot;
 
 	object1 = (t_object*)malloc(sizeof(t_object));
 	object2 = (t_object*)malloc(sizeof(t_object));
 	object3 = (t_object*)malloc(sizeof(t_object));
+	object4 = (t_object*)malloc(sizeof(t_object));
+	light_dot = (t_object*)malloc(sizeof(t_object));
 
 	object1->type = 1;
-	object1->center = (t_vec){2, 1, 10};
+	object1->center = (t_vec){0, -1, 3};
 	object1->radius = 1;
 	object1->color = (t_color){255, 0, 0};
-	object1->next = object2;
+	object1->next = object3;
 
-	object2->type = 2;
-	object2->center = (t_vec){3, 2, 4};
+	object2->type = 1;
+	object2->center = (t_vec){2, 0, 4};
 	object2->radius = 1;
-	object2->color = (t_color){0, 255, 0};
+	object2->color = (t_color){0, 0, 255};
 	object2->next = object3;
 
-	object3->type = 3;
-	object3->center = (t_vec){3, 1, 4};
+	object3->type = 1;
+	object3->center = (t_vec){-2, 0, 4};
 	object3->radius = 1;
-	object3->color = (t_color){0, 0, 255};
-	object3->next = NULL;
+	object3->color = (t_color){0, 255, 0};
+	object3->next = object4;
+
+	object4->type = 1;
+	object4->center = (t_vec){0, -5001, 0};
+	object4->radius = 5000;
+	object4->color = (t_color){255, 255, 0};
+	object4->next = light_dot;
+
+	light_dot->type = 1;
+	light_dot->center = (t_vec){1, 0, 4};
+	light_dot->radius = 1;
+	light_dot->color = (t_color){255, 255, 0};
+	light_dot->next = NULL;
+
+
+
 
 	return (object1);
 }
@@ -72,11 +89,12 @@ t_light		*ft_set_light(int type, float intent, t_vec pos, t_vec dir)
 	light1->next = light2;
 	light2->type = 2;
 	light2->intensity = 0.6;
-	light2->position = (t_vec){2, 1, 0};
+	light2->position = (t_vec){2, 1, -1};
 	light2->next = light3;
 	light3->type = 3;
 	light3->intensity = 0.2;
-	light3->direction = (t_vec){1,4,4};
+	light3->direction = (t_vec){1, 4, 4};
+	light3->next = NULL;
 	return (light1);
 }
 

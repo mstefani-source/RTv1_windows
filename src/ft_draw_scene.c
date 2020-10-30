@@ -4,9 +4,13 @@ t_vec	CanvasToViewport(int i, t_scene *rtv)
 {
 	t_vec res;
 
-	res.x = i % rtv->width * rtv->portale->vw / rtv->width; 
-	res.y = i / rtv->height * rtv->portale->vh / rtv->height;
+	res.x = - rtv->width / 2;
+	res.y = - rtv->height / 2;
+
+	res.x = ((i % rtv->width) - rtv->width / 2) * rtv->portale->vw / rtv->width; 
+	res.y = -((i / rtv->height) - rtv->height / 2) * rtv->portale->vh / rtv->height;
 	res.z = rtv->portale->d;
+
     return (res);
 }
 
@@ -45,15 +49,24 @@ float		ft_calc_light(t_vec n, t_vec p, t_light *light)
 	t_vec	l;
 	float 	n_dot_l;
 
-	intensity = 0.2;
+	intensity = 0.0;
 
-//	intensity += light->intensity;
-	l = ft_vectorsub(&light->position, &p);
-//	l = light->direction;
-	n_dot_l = ft_vectordot(&n, &l);
-
-	if (n_dot_l >= 0)
-		intensity += light->intensity * n_dot_l / (ft_vectorlen(&n) * ft_vectorlen(&l));
+while (light)
+	{
+	if (light->type == 1)
+		intensity += light->intensity;
+		else
+		{
+			if (light->type == 2)
+				l = ft_vectorsub(&light->position, &p);
+				else
+					l = light->direction;
+			n_dot_l = ft_vectordot(&n, &l);
+			if (n_dot_l >= 0)
+			intensity += light->intensity * n_dot_l / (ft_vectorlen(&n) * ft_vectorlen(&l));
+		}
+		light = light->next;
+	}
 	return (intensity);
 }
 
@@ -79,24 +92,18 @@ int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *light)
 		}
 		if ((solution.t2 > 1) && (solution.t2 < INT_MAX) && (solution.t2 < closestt))
 		{
-			closestt = solution.t1;
+			closestt = solution.t2;
 			closest_sphere = *objects;
 		}
 		objects = objects->next;
 	}
 	if (closest_sphere.type == 0)
 		return 0x00000000;
-	
+
 	d_vec = ft_vectorscale(&d_vec, closestt);
-
 	t_vec p = ft_vectoradd(cam_pos, &d_vec);
-
-    t_vec n = ft_vectorsub(&p, &closest_sphere.center);
-
+	t_vec n = ft_vectorsub(&p, &closest_sphere.center);
 	ft_vectornorm(&n);
-    
-//	n = ft_vectorscale(&n, );
-    
 	lightt = ft_calc_light(n, p, light);
 	return (ft_rgb_to_int(closest_sphere.color.r * lightt, closest_sphere.color.g * lightt, closest_sphere.color.b * lightt)); 
 }

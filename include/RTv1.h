@@ -43,7 +43,7 @@ typedef struct		s_object
 {
 	int 			type;
 	t_vec			center;
-	int				radius;
+	float			radius;
 	t_vec			norm;
 	t_color			color;
     struct s_object	*next;
