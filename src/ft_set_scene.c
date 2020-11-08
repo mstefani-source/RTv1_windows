@@ -93,7 +93,7 @@ t_scene		*ft_set_scene(char *file)
 
 	if ((rtv = ft_memalloc(sizeof(t_scene))) == NULL)
 		return (NULL);
-	rtv->height = 800;
+	rtv->ht = 800;
 	rtv->wd = 800;
 	rtv->cam_pos = ft_setcam_position(0, 0, 0);
 	rtv->portale = ft_set_portale(1.0, 1.0, 1.0);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   RTv1.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mstefani <mstefani@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/09 14:40:49 by mstefani          #+#    #+#             */
+/*   Updated: 2019/11/28 17:02:58 by mstefani         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RTv1_RTv1_H
 # define RTv1_RTv1_H
 
@@ -55,7 +67,7 @@ typedef struct      s_scene
 	t_vec			*cam_pos;
 	t_light			*light;
 	int				wd;
-	int				height;
+	int				ht;
 }                   t_scene;
 
 typedef struct		s_wnd
