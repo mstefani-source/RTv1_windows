@@ -2,12 +2,8 @@
 
 void	*mlsdl_close_window(t_mlsdl *sdl)
 {
-	
-	/* Release resources */
-
-
- 	if (sdl->texture)
-		SDL_DestroyTexture(sdl->texture);
+ 	if (sdl->txt)
+		SDL_DestroyTexture(sdl->txt);
  	if (sdl->render)
 		SDL_DestroyRenderer(sdl->render);
 	if (sdl->pointer)

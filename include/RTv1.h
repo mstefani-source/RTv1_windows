@@ -6,8 +6,6 @@
 #include "../mlsdl/mlsdl.h"
 #include "../libft/libft.h"
 #include "primitives.h"
-#define WIDTH 640
-#define HEIGHT 640
 
 typedef struct		s_color
 {
@@ -17,35 +15,36 @@ typedef struct		s_color
 }					t_color;
 
 typedef struct		s_solution
-{
-	float			t1;
-	float			t2;
+{	
 	t_color			color;
+	double			t1;
+	double			t2;
 }					t_solution;
 
 typedef struct      s_viewport
 {
     double			d;
-    float			vw;
-    float			vh;
+    double			vw;
+    double			vh;
 }                   t_viewport;
 
 typedef	struct		s_light
-{
-	int				type;
-	float			intensity;
+{	
 	t_vec			position;
 	t_vec			direction;
+	double			intensity;
+	int				type;
 	struct s_light	*next;
 }					t_light;
 
 typedef struct		s_object
 {
-	int 			type;
-	t_vec			center;
-	float			radius;
 	t_vec			norm;
+	t_vec			center;
 	t_color			color;
+	double			radius;
+	double			shine;
+	int 			type;
     struct s_object	*next;
 }					t_object;
 
@@ -55,7 +54,7 @@ typedef struct      s_scene
 	t_viewport		*portale;
 	t_vec			*cam_pos;
 	t_light			*light;
-	int				width;
+	int				wd;
 	int				height;
 }                   t_scene;
 

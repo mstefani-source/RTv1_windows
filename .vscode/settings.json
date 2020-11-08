@@ -1,4 +1,8 @@
 {
 	"C_Cpp.errorSquiggles": "Enabled",
-	"editor.accessibilitySupport": "on"
+	"editor.accessibilitySupport": "on",
+	"editor.wordWrap": "on",
+	"editor.wordWrapColumn": 80,
+	"editor.wrappingIndent": "indent",
+	"editor.rulers": [80]
 }

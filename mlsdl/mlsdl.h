@@ -1,14 +1,12 @@
-#ifndef MLX_MLX_H
-# define MLX_MLX_H
+#ifndef MLSDL_MLSDL_H
+# define MLSDL_MLSDL_H
 
-#include <GL/gl.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_timer.h>
+#include "../SDL/include/SDL2/SDL.h"
+#include "../SDL/include/SDL2/SDL_image.h"
 
 typedef struct      s_mlsdl_data
 {
-    int             *pixels;
+    int             *pix;
     int             *bits_per_pixel;
     int             *size_line; 
     int             *endian;
@@ -19,7 +17,7 @@ typedef struct      s_mlsdl
     SDL_Window      *pointer;
     SDL_Renderer    *render;
     SDL_Surface     *surface;
-    SDL_Texture     *texture;
+    SDL_Texture     *txt;
     t_mlsdl_data    *data;
 }                   t_mlsdl;
 

@@ -4,10 +4,10 @@ t_vec	CanvasToViewport(int i, t_scene *rtv)
 {
 	t_vec res;
 
-	res.x = - rtv->width / 2;
+	res.x = - rtv->wd / 2;
 	res.y = - rtv->height / 2;
 
-	res.x = ((i % rtv->width) - rtv->width / 2) * rtv->portale->vw / rtv->width; 
+	res.x = ((i % rtv->wd) - rtv->wd / 2) * rtv->portale->vw / rtv->wd; 
 	res.y = -((i / rtv->height) - rtv->height / 2) * rtv->portale->vh / rtv->height;
 	res.z = rtv->portale->d;
 
@@ -43,13 +43,41 @@ t_solution 	ft_intersectraysphere(t_vec *cam_pos, t_vec *D, t_object *object)
     return (solution);
 }
 
-float		ft_calc_light(t_vec n, t_vec p, t_light *light)
+double		ft_calc_shine(t_vec l, t_vec p, t_vec n)
 {
-	float 	intensity;
+	double 	res;
+	t_vec	local_norm;
+	t_vec	reflect_vec;
+	t_vec	to_me;
+
+	to_me = ft_vectorscale(&p, -1);
+	ft_vectornorm(&to_me);
+
+	local_norm = ft_vectorscale(&n ,ft_vectordot(&n, &l));
+	reflect_vec = ft_vectorsub(&local_norm, &l);
+	reflect_vec = ft_vectoradd(&local_norm, &reflect_vec);
+	ft_vectornorm(&reflect_vec);
+
+	return (ft_vectordot(&reflect_vec, &to_me));
+}
+
+double		clamp(double val, double l, double r) {
+	if (val >= l && val <= r)
+		return val;
+	else if (val < l)
+		return l;
+	return r;
+}
+
+double		ft_calc_light(t_vec n, t_vec p, t_light *light, double *shine)
+{
 	t_vec	l;
-	float 	n_dot_l;
+	double	intensity;
+	double	n_dot_l;
+	double	shine_int;
 
 	intensity = 0.0;
+	shine_int = 0.0;
 
 while (light)
 	{
@@ -58,16 +86,25 @@ while (light)
 		else
 		{
 			if (light->type == 2)
+			{
 				l = ft_vectorsub(&light->position, &p);
-				else
-					l = light->direction;
+				ft_vectornorm(&l);
+			}
+			else 
+			{
+				l = light->direction;
+				ft_vectornorm(&l);
+			}
 			n_dot_l = ft_vectordot(&n, &l);
 			if (n_dot_l >= 0)
-			intensity += light->intensity * n_dot_l / (ft_vectorlen(&n) * ft_vectorlen(&l));
+			{
+ 				shine_int +=  0.4 * pow(ft_calc_shine(l, p, n), *shine);
+				intensity += light->intensity * n_dot_l;
+			}
 		}
 		light = light->next;
 	}
-	return (intensity);
+	return (clamp(intensity + shine_int, 0., 1.));
 }
 
 int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *light)
@@ -104,7 +141,8 @@ int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *light)
 	t_vec p = ft_vectoradd(cam_pos, &d_vec);
 	t_vec n = ft_vectorsub(&p, &closest_sphere.center);
 	ft_vectornorm(&n);
-	lightt = ft_calc_light(n, p, light);
+	lightt = ft_calc_light(n, p, light, &closest_sphere.shine);
+
 	return (ft_rgb_to_int(closest_sphere.color.r * lightt, closest_sphere.color.g * lightt, closest_sphere.color.b * lightt)); 
 }
 
@@ -125,9 +163,9 @@ int		ft_draw_scene(t_mlsdl *sdl, t_scene *rtv)
 {
 	int 	x = 0;
 	
-	while (x < rtv->width * rtv->height)
+	while (x < rtv->wd * rtv->height)
 	{
-		sdl->data->pixels[x] = ft_calc_pixel_color(x, rtv);
+		sdl->data->pix[x] = ft_calc_pixel_color(x, rtv);
 		x++;
 	}
 	return 0;

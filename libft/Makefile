@@ -82,7 +82,8 @@ SRC = ft_atoi.c \
 		ft_tolower.c \
 		ft_toupper.c \
 		ft_abs.c \
-		ft_vector.c
+		ft_vector.c \
+		ft_rgb_to_int.c
 
 CFLAGS = -Wall -Werror -Wextra
 

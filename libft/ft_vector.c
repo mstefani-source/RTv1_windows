@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-t_vec	ft_vectorscale(t_vec *v, float n)
+t_vec	ft_vectorscale(t_vec *v, double n)
 {
 	t_vec	res;
 
@@ -52,20 +52,20 @@ void	ft_vectornorm(t_vec *v)
 	v->z *= n;
 }
 
-float	ft_vectordot(t_vec *v1, t_vec *v2)
+double	ft_vectordot(t_vec *v1, t_vec *v2)
 {
-	float	res;
+	double	res;
 
 	res = v1->x * v2->x + v1->y * v2->y + v1->z * v2->z;
 	return (res);
 }
 
-float	ft_vectorlen(t_vec *v)
+double	ft_vectorlen(t_vec *v)
 {
 	return(sqrt(v->x * v->x + v->y * v->y + v->z * v->z));
 }
 
 t_vec	ft_vectoradd(t_vec *v1, t_vec *v2)
 {
-	return((t_vec){v1->x + v2->x, v1->y + v2->y, v1->z * v2->z});
+	return((t_vec){v1->x + v2->x, v1->y + v2->y, v1->z + v2->z});
 }

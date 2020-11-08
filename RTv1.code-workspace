@@ -1,10 +1,7 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"editor.accessibilitySupport": "on"
-	}
+    "folders": [
+        {
+            "path": "."
+        }
+    ]
 }

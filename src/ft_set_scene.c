@@ -4,7 +4,7 @@ t_vec		*ft_setcam_position(int x, int y, int z)
 {
 	t_vec	*cam_pos;
 
-	cam_pos = (t_vec*)malloc(sizeof(cam_pos));
+	cam_pos = (t_vec*)malloc(sizeof(t_vec));
 	cam_pos->x = 0;
 	cam_pos->y = 0;
 	cam_pos->z = 0;
@@ -15,17 +15,11 @@ t_viewport   *ft_set_portale(int d, int vw, int vh)
 {
 	t_viewport *portale;
 	
-	portale = (t_viewport*)malloc(sizeof(portale));
+	portale = (t_viewport*)malloc(sizeof(t_viewport));
 	portale->d = 1.0;
 	portale->vw = 1.0;
 	portale->vh = 1.0;
 	return (portale);
-}
-
-void	ft_set_canvas(t_scene *rtv)
-{
-	rtv->width = 800;
-	rtv->height = 800;
 }
 
 t_object	*ft_set_objects(char *line)
@@ -41,35 +35,30 @@ t_object	*ft_set_objects(char *line)
 	object1->type = 1;
 	object1->center = (t_vec){0, -1, 3};
 	object1->radius = 1;
+	object1->shine = 500;
 	object1->color = (t_color){255, 0, 0};
-	object1->next = object3;
+	object1->next = object2;
 
 	object2->type = 1;
-	object2->center = (t_vec){2, 0, 4};
+	object2->center = (t_vec){1, 0, 4};
 	object2->radius = 1;
+	object2->shine = 50;
 	object2->color = (t_color){0, 0, 255};
 	object2->next = object3;
 
 	object3->type = 1;
-	object3->center = (t_vec){-2, 0, 4};
+	object3->center = (t_vec){-1, 0, 7};
 	object3->radius = 1;
+	object3->shine = 1000;
 	object3->color = (t_color){0, 255, 0};
 	object3->next = object4;
 
 	object4->type = 1;
 	object4->center = (t_vec){0, -5001, 0};
+	object4->shine = 500;
 	object4->radius = 5000;
 	object4->color = (t_color){255, 255, 0};
-	object4->next = light_dot;
-
-	light_dot->type = 1;
-	light_dot->center = (t_vec){1, 0, 4};
-	light_dot->radius = 1;
-	light_dot->color = (t_color){255, 255, 0};
-	light_dot->next = NULL;
-
-
-
+	object4->next = NULL;
 
 	return (object1);
 }
@@ -102,8 +91,10 @@ t_scene		*ft_set_scene(char *file)
 {
 	t_scene 	*rtv;
 
-	rtv = (t_scene*)malloc(sizeof(rtv));
-	ft_set_canvas(rtv);
+	if ((rtv = ft_memalloc(sizeof(t_scene))) == NULL)
+		return (NULL);
+	rtv->height = 800;
+	rtv->wd = 800;
 	rtv->cam_pos = ft_setcam_position(0, 0, 0);
 	rtv->portale = ft_set_portale(1.0, 1.0, 1.0);
 	rtv->objects = ft_set_objects("sp 0.0,0.0,20.6 12.6 10,0,255");
