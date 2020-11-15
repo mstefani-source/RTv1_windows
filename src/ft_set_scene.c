@@ -76,13 +76,18 @@ t_light		*ft_set_light(int type, float intent, t_vec pos, t_vec dir)
 	light1->position = pos;
 	light1->direction = dir;
 	light1->next = light2;
+	light1->color = (t_color){255, 255, 255};
+
 	light2->type = 2;
 	light2->intensity = 0.6;
 	light2->position = (t_vec){2, 1, -1};
+	light2->color = (t_color){255, 255, 255};
 	light2->next = light3;
+	
 	light3->type = 3;
 	light3->intensity = 0.2;
 	light3->direction = (t_vec){1, 4, 4};
+	light3->color = (t_color){255, 255, 255};
 	light3->next = NULL;
 	return (light1);
 }

@@ -1,0 +1,35 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "C/C++: gcc build active file",
+            "command": "/usr/bin/gcc",
+            "args": [
+                "-g",
+                "${workspaceFolder}/src/*.c",
+                "${workspaceFolder}/mlsdl/*.c",
+                "${workspaceFolder}/libft/*.c",
+                "-I/usr/local/include/",
+                "-L/usr/local/lib/",
+                "-LSDL/lib/",
+                "-ISDL/include/SDL2",
+                "-Wall",
+                "-lSDL2",
+                "-lSDL2_image",
+                "-o",
+                "${workspaceFolder}/RTv1"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ],
+    "version": "2.0.0"
+}

@@ -44,6 +44,7 @@ typedef	struct		s_light
 {	
 	t_vec			position;
 	t_vec			direction;
+	t_color			color;
 	double			intensity;
 	int				type;
 	struct s_light	*next;
