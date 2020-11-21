@@ -1,6 +1,7 @@
 #include "../include/RTv1.h"
 
-double		clamp(double val, double l, double r) {
+double		clamp(double val, double l, double r)
+{
 	if (val >= l && val <= r)
 		return val;
 	else if (val < l)
@@ -25,37 +26,31 @@ double		ft_calc_shine(t_vec l, t_vec p, t_vec n)
 	return (ft_vectordot(&reflect_vec, &to_me));
 }
 
-int			ft_check_shadow(t_vec p, t_vec l, t_object *objects)
+int			ft_check_shadow(t_vec p, t_light *l, t_object *objects)
 {
-	t_object	closest_object;
 	t_solution	sol;
-	double		point;
-
-	closest_object.type = 0;
-	point = INT_MAX;
-
-	while (objects)
+    t_vec       vec_to_light;
+	double      point = INT_MAX;
+    double      len_vec_to_light;
+    
+    vec_to_light = ft_vectorsub(&(l->position), &p);
+    len_vec_to_light = ft_vectorlen(&vec_to_light);
+    ft_vectornorm(&vec_to_light);
+    while (objects)
 	{
-		objects->center = ft_vectorsub(&objects->center, &p);
-	    sol = ft_intersectraysphere(&p, &l, objects);	    
-		if ((sol.t1 > 0.001) && (sol.t1 < INT_MAX) && (sol.t1 < point)) 
-		{
+	    sol = ft_intersectraysphere(&p, &vec_to_light, objects);	    
+ 		if ((sol.t1 > 0.001) && (sol.t1 < INT_MAX) && (sol.t1 < point)) 
 			point = sol.t1;
-			closest_object = *objects;
-		}
-		if ((sol.t2 > 1) && (sol.t2 < INT_MAX) && (sol.t2 < point))
-		{
+		if ((sol.t2 > 0.001) && (sol.t2 < INT_MAX) && (sol.t2 < point))
 			point = sol.t2;
-			closest_object = *objects;
-		}
-		objects = objects->next;
+        if (point > 0 && point < len_vec_to_light)
+            return (1);
+    	objects = objects->next;
 	}
-	if (closest_object.type == 0)
-		return 0x00000000;
-	return (1);
+	return (0);
 }
 
-double		ft_calc_light(t_vec n, t_vec p, t_light *light, double *shine, t_object *obj)
+double		ft_calc_light(t_vec n, t_vec p, t_light *light, double *shine)
 {
 	t_vec	l;
 	double	intensity;
@@ -65,8 +60,6 @@ double		ft_calc_light(t_vec n, t_vec p, t_light *light, double *shine, t_object 
 	intensity = 0.0;
 	shine_int = 0.0;
 
-while (light)
-	{
 	if (light->type == 1)
 		intensity += light->intensity;
 		else
@@ -78,17 +71,11 @@ while (light)
 			ft_vectornorm(&l);
 			n_dot_l = ft_vectordot(&n, &l);
 
-	/*		if (ft_check_shadow(p, l, obj) == 1)
-				return(0); */
 			if (n_dot_l > 0)
 			{
-				// зеркальность
 				shine_int +=  0.4 * pow(ft_calc_shine(l, p, n), *shine);
-				// диффузность
 				intensity += light->intensity * n_dot_l;	
 			}
 		}
-		light = light->next;
-	}
-	return (clamp(intensity + shine_int, 0., 1.));
+    return (intensity + shine_int);
 }

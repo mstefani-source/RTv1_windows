@@ -14,6 +14,7 @@ t_solution 	ft_intersectraysphere(t_vec *cam_pos, t_vec *d, t_object *obj)
     sol.t1 = INT_MAX;
 	sol.t2 = INT_MAX;
 	sol.color = (t_color){0, 0, 0};
+    sol.flag = 0;
 	discriminant = -1;
 	
 	oc = ft_vectorsub(cam_pos, &obj->center);
@@ -27,5 +28,8 @@ t_solution 	ft_intersectraysphere(t_vec *cam_pos, t_vec *d, t_object *obj)
 
     sol.t1 = (-k2 + sqrt(discriminant)) / (2 * k1);
    	sol.t2 = (-k2 - sqrt(discriminant)) / (2 * k1);
+    sol.color = obj->color;
+    sol.flag = 1;
     return (sol);
 }
+

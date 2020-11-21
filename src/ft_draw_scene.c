@@ -36,9 +36,9 @@ int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *lt)
 	double		point;
 	double		ltt;
 
+	ltt = 0.08;
 	f_obj = objects;
 	point = INT_MAX;
-	sol.color = (t_color){0, 0, 0};
 	closest_object.type = 0;
 	
 	// пересекает ли луч из камеры какую ибо фигуру?
@@ -60,16 +60,19 @@ int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *lt)
 	if (closest_object.type == 0)  // не пересекает возвращаем 0
 		return 0x00000000;
 	
-
 	d_vec = ft_vectorscale(&d_vec, point);  	// вычисляем 
 	p = ft_vectoradd(cam_pos, &d_vec);      	// вектор до точки
 	n = ft_vectorsub(&p, &closest_object.center); // вычисяем 
-//	ft_vectornorm(&n);							 // нормаль в этой точке
-
-	// вдруг тут тень?
-	//if (ft_check_shadow(p,lt))
-
-	ltt = ft_calc_light(n, p, lt, &closest_object.shine, f_obj);	
+	ft_vectornorm(&n);							 // нормаль в этой точке
+/* 	t_vec temp = ft_vectorscale(&n, 1e-2);
+	p = ft_vectoradd(&p, &temp); */
+	while (lt)
+	{
+		if (ft_check_shadow(p, lt, f_obj) == 0)
+			ltt += ft_calc_light(n, p, lt, &closest_object.shine);
+		lt = lt->next;
+	}
+	ltt = clamp(ltt, 0., 1.);
 	return (ft_rgb_to_int(closest_object.color.r * ltt, closest_object.color.g * ltt, closest_object.color.b * ltt)); 
 }
 
@@ -92,6 +95,9 @@ int		ft_draw_scene(t_mlsdl *sdl, t_scene *rtv)
 	
 	while (x < rtv->wd * rtv->ht)
 	{
+		if (x == 800 * 700 + 100) {
+			x = x - 1 + 1;
+		}
 		sdl->data->pix[x] = ft_calc_pixel_color(x, rtv);
 		x++;
 	}
