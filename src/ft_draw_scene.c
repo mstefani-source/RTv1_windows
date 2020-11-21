@@ -28,7 +28,7 @@ t_vec	CanvasToViewport(int i, t_scene *rtv)
 
 int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *lt)
 {
-    t_solution	sol;
+    t_solution	*sol;
 	t_object	closest_object;
 	t_object	*f_obj;
 	t_vec 		p;
@@ -41,20 +41,29 @@ int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *lt)
 	point = INT_MAX;
 	closest_object.type = 0;
 	
+
 	// пересекает ли луч из камеры какую ибо фигуру?
 	while (objects)
 	{
-	    sol = ft_intersectraysphere(cam_pos, &d_vec, objects);	    
-		if ((sol.t1 > 1) && (sol.t1 < INT_MAX) && (sol.t1 < point)) 
+		if (objects->type == 1)
+	    	sol = ft_intersectraysphere(cam_pos, &d_vec, objects);
+		if (objects->type == 2)
+			sol = ft_intersectrayplan(cam_pos, &d_vec, objects);
+	
+	
+	
+		if ((sol->t1 > 1) && (sol->t1 < INT_MAX) && (sol->t1 < point)) 
 		{
-			point = sol.t1;
+			point = sol->t1;
 			closest_object = *objects;
 		}
-		if ((sol.t2 > 1) && (sol.t2 < INT_MAX) && (sol.t2 < point))
+		if ((sol->t2 > 1) && (sol->t2 < INT_MAX) && (sol->t2 < point))
 		{
-			point = sol.t2;
+			point = sol->t2;
 			closest_object = *objects;
 		}
+	
+	
 		objects = objects->next;
 	}
 	if (closest_object.type == 0)  // не пересекает возвращаем 0
@@ -64,8 +73,7 @@ int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *lt)
 	p = ft_vectoradd(cam_pos, &d_vec);      	// вектор до точки
 	n = ft_vectorsub(&p, &closest_object.center); // вычисяем 
 	ft_vectornorm(&n);							 // нормаль в этой точке
-/* 	t_vec temp = ft_vectorscale(&n, 1e-2);
-	p = ft_vectoradd(&p, &temp); */
+
 	while (lt)
 	{
 		if (ft_check_shadow(p, lt, f_obj) == 0)

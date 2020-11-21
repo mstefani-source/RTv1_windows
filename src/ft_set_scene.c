@@ -24,13 +24,13 @@ t_viewport   *ft_set_portale(int d, int vw, int vh)
 
 t_object	*ft_set_objects(char *line)
 {
-	t_object	*object1, *object2, *object3, *object4, *light_dot;
+	t_object	*object1, *object2, *object3, *object4, *object5;
 
 	object1 = (t_object*)malloc(sizeof(t_object));
 	object2 = (t_object*)malloc(sizeof(t_object));
 	object3 = (t_object*)malloc(sizeof(t_object));
 	object4 = (t_object*)malloc(sizeof(t_object));
-	light_dot = (t_object*)malloc(sizeof(t_object));
+	object5 = (t_object*)malloc(sizeof(t_object));
 
 	object1->type = 1;
 	object1->center = (t_vec){0, 0, 3};
@@ -58,7 +58,15 @@ t_object	*ft_set_objects(char *line)
 	object4->shine = 500;
 	object4->radius = 5000;
 	object4->color = (t_color){255, 255, 0};
-	object4->next = NULL;
+	object4->next = object5;
+
+	object5->type = 2;
+	object5->norm = (t_vec){0 , 3, 0};
+	object5->center = (t_vec){0, 0, 0};
+	object5->shine = 500;
+	object5->radius = 3;
+	object5->color = (t_color){127, 0, 255};
+	object5->next = NULL;
 
 	return (object1);
 }

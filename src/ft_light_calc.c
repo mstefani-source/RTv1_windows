@@ -28,7 +28,7 @@ double		ft_calc_shine(t_vec l, t_vec p, t_vec n)
 
 int			ft_check_shadow(t_vec p, t_light *l, t_object *objects)
 {
-	t_solution	sol;
+	t_solution	*sol;
     t_vec       vec_to_light;
 	double      point = INT_MAX;
     double      len_vec_to_light;
@@ -39,10 +39,10 @@ int			ft_check_shadow(t_vec p, t_light *l, t_object *objects)
     while (objects)
 	{
 	    sol = ft_intersectraysphere(&p, &vec_to_light, objects);	    
- 		if ((sol.t1 > 0.001) && (sol.t1 < INT_MAX) && (sol.t1 < point)) 
-			point = sol.t1;
-		if ((sol.t2 > 0.001) && (sol.t2 < INT_MAX) && (sol.t2 < point))
-			point = sol.t2;
+ 		if ((sol->t1 > 0.001) && (sol->t1 < INT_MAX) && (sol->t1 < point)) 
+			point = sol->t1;
+		if ((sol->t2 > 0.001) && (sol->t2 < INT_MAX) && (sol->t2 < point))
+			point = sol->t2;
         if (point > 0 && point < len_vec_to_light)
             return (1);
     	objects = objects->next;
