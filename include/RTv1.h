@@ -85,5 +85,8 @@ typedef struct		s_wnd
 t_mlsdl		*ft_init_window(int width, int height);
 t_scene		*ft_set_scene(char *file);
 int		    ft_draw_scene(t_mlsdl *sdl, t_scene *rtv);
+int			ft_check_shadow(t_vec p, t_vec l, t_object *objects);
+t_solution 	ft_intersectraysphere(t_vec *cam_pos, t_vec *d, t_object *obj);
+double		ft_calc_light(t_vec n, t_vec p, t_light *light, double *shine, t_object *obj);
 
 #endif
