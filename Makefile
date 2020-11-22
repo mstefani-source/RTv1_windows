@@ -4,7 +4,9 @@ SRC = src/RTv1.c \
 	gnl/get_next_line.c \
 	src/ft_init_window.c \
 	src/ft_draw_scene.c \
-	src/ft_set_scene.c
+	src/ft_set_scene.c \
+	src/ft_light_calc.c \
+	src/ft_intersect_figures.c
 
 INCLUDES = -I/usr/local/include -ISDL/include/ -Iinclude -Imlsdl -Ilibft
 

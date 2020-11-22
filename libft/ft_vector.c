@@ -69,3 +69,13 @@ t_vec	ft_vectoradd(t_vec *v1, t_vec *v2)
 {
 	return((t_vec){v1->x + v2->x, v1->y + v2->y, v1->z + v2->z});
 }
+
+double	ft_vec_proj_vec(t_vec *v1, t_vec *v2)
+{
+	double scal;
+	double len;
+
+	scal = ft_vectordot(v1, v2);
+	len = ft_vectorlen(v2);
+	return(scal / len);
+}

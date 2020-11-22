@@ -111,6 +111,7 @@ void				ft_vectornorm(t_vec *v);
 double				ft_vectordot(t_vec *v1, t_vec *v2);
 double				ft_vectorlen(t_vec *v);
 t_vec				ft_vectoradd(t_vec *v1, t_vec *v2);
+double				ft_vec_proj_vec(t_vec *v1, t_vec *v2);
 int					ft_rgb_to_int(int red, int green, int blue);
 
 #endif

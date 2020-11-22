@@ -38,8 +38,14 @@ int			ft_check_shadow(t_vec p, t_light *l, t_object *objects)
     ft_vectornorm(&vec_to_light);
     while (objects)
 	{
-	    sol = ft_intersectraysphere(&p, &vec_to_light, objects);	    
- 		if ((sol->t1 > 0.001) && (sol->t1 < INT_MAX) && (sol->t1 < point)) 
+		if (objects->type == 1)
+			sol = ft_intersectraysphere(&p, &vec_to_light, objects);
+		if (objects->type == 2)
+			sol = ft_intersectrayplan(&p, &vec_to_light, objects);
+		if (objects->type == 3)
+			sol = ft_intersectcyl(&p, &vec_to_light, objects);	
+
+		if ((sol->t1 > 0.001) && (sol->t1 < INT_MAX) && (sol->t1 < point)) 
 			point = sol->t1;
 		if ((sol->t2 > 0.001) && (sol->t2 < INT_MAX) && (sol->t2 < point))
 			point = sol->t2;
@@ -73,7 +79,7 @@ double		ft_calc_light(t_vec n, t_vec p, t_light *light, double *shine)
 
 			if (n_dot_l > 0)
 			{
-				shine_int +=  0.4 * pow(ft_calc_shine(l, p, n), *shine);
+				shine_int +=  0.4 * pow(clamp(ft_calc_shine(l, p, n), 0., 1.), *shine);
 				intensity += light->intensity * n_dot_l;	
 			}
 		}

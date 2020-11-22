@@ -85,6 +85,7 @@ typedef struct		s_wnd
 
 t_solution 	*ft_intersectraysphere(t_vec *cam_pos, t_vec *d, t_object *obj);
 t_solution	*ft_intersectrayplan(t_vec *cam_pos, t_vec *d_vec, t_object *obj);
+t_solution	*ft_intersectcyl(t_vec *cam_pos, t_vec *d, t_object *obj);
 t_mlsdl		*ft_init_window(int width, int height);
 t_scene		*ft_set_scene(char *file);
 int		    ft_draw_scene(t_mlsdl *sdl, t_scene *rtv);

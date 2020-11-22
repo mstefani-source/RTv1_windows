@@ -47,36 +47,56 @@ int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *lt)
 	{
 		if (objects->type == 1)
 	    	sol = ft_intersectraysphere(cam_pos, &d_vec, objects);
-		if (objects->type == 2)
+  		if (objects->type == 2)
 			sol = ft_intersectrayplan(cam_pos, &d_vec, objects);
-	
-	
+		if (objects->type == 3)
+			sol = ft_intersectcyl(cam_pos, &d_vec, objects);	
 	
 		if ((sol->t1 > 1) && (sol->t1 < INT_MAX) && (sol->t1 < point)) 
 		{
 			point = sol->t1;
 			closest_object = *objects;
 		}
-		if ((sol->t2 > 1) && (sol->t2 < INT_MAX) && (sol->t2 < point))
+ 		if ((sol->t2 > 1) && (sol->t2 < INT_MAX) && (sol->t2 < point))
 		{
 			point = sol->t2;
 			closest_object = *objects;
-		}
+		} 
 	
 	
 		objects = objects->next;
 	}
-	if (closest_object.type == 0)  // не пересекает возвращаем 0
-		return 0x00000000;
+	if (point == INT_MAX)
+		return (0);
 	
 	d_vec = ft_vectorscale(&d_vec, point);  	// вычисляем 
-	p = ft_vectoradd(cam_pos, &d_vec);      	// вектор до точки
-	n = ft_vectorsub(&p, &closest_object.center); // вычисяем 
+	p = ft_vectoradd(cam_pos, &d_vec);   	  	// вектор до точки
+/* 	if (closest_object.type == 1)
+		n = ft_vectorsub(&p, &closest_object.center); // вычисяем 
+	if (closest_object.type == 2)
+		n = closest_object.norm; 
+	if (closest_object.type == 3)
+	{*/
+
+	t_vec temp1 = ft_vectorsub(&p, &closest_object.center);
+	double m = ft_vectordot(&temp1, &closest_object.norm);
+	t_vec temp2 = ft_vectorscale(&closest_object.norm, m);
+	n = ft_vectoradd(&temp1, &temp2);
+
+/* 		t_vec tmp = ft_vectorscale(&closest_object.norm, point);					// V - normale
+		t_vec oc = ft_vectorsub(cam_pos, &closest_object.center);					// oc - вектор от центра до камеры
+		double m = ft_vectordot(&d_vec, &tmp) + ft_vectordot(&oc, &closest_object.norm); // D | V * t  +  X | V
+		tmp = ft_vectorsub(&p, &closest_object.center); 
+		oc = ft_vectorscale(&closest_object.norm, m);
+		n =  ft_vectorsub(&tmp, &oc);   //nrm( P - C - V * m ) 
+		//m = D|V * t + X|V
+  	 	//N = nrm(P - C - V * m)
+	}*/
 	ft_vectornorm(&n);							 // нормаль в этой точке
 
 	while (lt)
 	{
-		if (ft_check_shadow(p, lt, f_obj) == 0)
+//		if (ft_check_shadow(p, lt, f_obj) == 0)
 			ltt += ft_calc_light(n, p, lt, &closest_object.shine);
 		lt = lt->next;
 	}
