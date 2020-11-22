@@ -62,8 +62,6 @@ int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *lt)
 			point = sol->t2;
 			closest_object = *objects;
 		} 
-	
-	
 		objects = objects->next;
 	}
 	if (point == INT_MAX)
@@ -71,17 +69,25 @@ int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *lt)
 	
 	d_vec = ft_vectorscale(&d_vec, point);  	// вычисляем 
 	p = ft_vectoradd(cam_pos, &d_vec);   	  	// вектор до точки
-/* 	if (closest_object.type == 1)
+ 	if (closest_object.type == 1)
 		n = ft_vectorsub(&p, &closest_object.center); // вычисяем 
 	if (closest_object.type == 2)
 		n = closest_object.norm; 
 	if (closest_object.type == 3)
-	{*/
+	{
 
-	t_vec temp1 = ft_vectorsub(&p, &closest_object.center);
+	t_vec cp = ft_vectorsub(&p, &closest_object.center);
+	ft_vectornorm(&closest_object.norm);
+	ft_vectornorm(&cp);
+	double a = ft_vectordot(&cp,&closest_object.norm);
+	t_vec q = ft_vectorscale(&closest_object.norm, a);
+	n = ft_vectorsub(&cp, &q);
+	}
+
+/* 	t_vec temp1 = ft_vectorsub(&p, &closest_object.center);
 	double m = ft_vectordot(&temp1, &closest_object.norm);
 	t_vec temp2 = ft_vectorscale(&closest_object.norm, m);
-	n = ft_vectoradd(&temp1, &temp2);
+	n = ft_vectoradd(&temp1, &temp2); */
 
 /* 		t_vec tmp = ft_vectorscale(&closest_object.norm, point);					// V - normale
 		t_vec oc = ft_vectorsub(cam_pos, &closest_object.center);					// oc - вектор от центра до камеры

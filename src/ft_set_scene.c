@@ -38,14 +38,14 @@ t_object	*ft_set_objects(char *line)
 	object1->radius = 3;
 	object1->shine = 500;
 	object1->color = (t_color){255, 0, 0};
-	object1->next = NULL;
+	object1->next = object2;
 
 	object2->type = 1;
-	object2->center = (t_vec){1, 2, 4};
+	object2->center = (t_vec){1, 1, 4};
 	object2->radius = 1;
 	object2->shine = 50;
 	object2->color = (t_color){0, 0, 255};
-	object2->next = object3;
+	object2->next = NULL;
 
 	object3->type = 1;
 	object3->center = (t_vec){-1, 2, 7};
@@ -113,6 +113,6 @@ t_scene		*ft_set_scene(char *file)
 	rtv->cam_pos = ft_setcam_position(0, 0, 0);
 	rtv->portale = ft_set_portale(1.0, 1.0, 1.0);
 	rtv->objects = ft_set_objects("sp 0.0,0.0,20.6 12.6 10,0,255");
-	rtv->light = ft_set_light(2, 0.6, (t_vec){0, 5, 14}, (t_vec){0, 0, 0});
+	rtv->light = ft_set_light(2, 0.6, (t_vec){0, 5, -14}, (t_vec){0, 0, 0});
 	return (rtv);
 }
