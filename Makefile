@@ -22,7 +22,7 @@ all: $(NAME)
 $(NAME): $(LIBOBJ) $(D_SDL)
 		make -C ./libft
 		make -C ./mlsdl
-		gcc $(CFLAGS) $(LIBOBJ) $(INCLUDES) -L./libft  $(SDLFLAGS) -lft -lsdl -lSDL2 -lSDL2_Image -o $(NAME)
+		gcc $(CFLAGS) $(LIBOBJ) $(INCLUDES) -L./libft  $(SDLFLAGS) -lft -lsdl -lm -lSDL2 -lSDL2_image -o $(NAME)
 %.o:%.c include/RTv1.h
 		gcc -MD -g -O0 -c $<  -o $@
 
