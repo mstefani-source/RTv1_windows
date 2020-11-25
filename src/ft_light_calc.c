@@ -43,7 +43,9 @@ int			ft_check_shadow(t_vec p, t_light *l, t_object *objects)
 		if (objects->type == 2)
 			sol = ft_intersectrayplan(&p, &vec_to_light, objects);
 		if (objects->type == 3)
-			sol = ft_intersectcyl(&p, &vec_to_light, objects);	
+			sol = ft_intersectcyl(&p, &vec_to_light, objects);
+		if (objects->type == 4)
+			sol = ft_intersectcone(&p, &vec_to_light, objects);
 
 		if ((sol->t1 > 0.001) && (sol->t1 < INT_MAX) && (sol->t1 < point)) 
 			point = sol->t1;
@@ -56,11 +58,11 @@ int			ft_check_shadow(t_vec p, t_light *l, t_object *objects)
 	return (0);
 }
 
-double		ft_calc_light(t_vec n, t_vec p, t_light *light, double *shine)
+double		ft_calc_light(t_vec n, t_vec p, t_light *light, double const *shine)
 {
 	t_vec	l;
 	double	intensity;
-	double	n_dot_l;
+	double	n_dot_l = 0.;
 	double	shine_int;
 
 	intensity = 0.0;
@@ -68,20 +70,19 @@ double		ft_calc_light(t_vec n, t_vec p, t_light *light, double *shine)
 
 	if (light->type == 1)
 		intensity += light->intensity;
+	else
+	{
+		if (light->type == 2)
+			l = ft_vectorsub(&light->position, &p);
 		else
-		{
-			if (light->type == 2)
-				l = ft_vectorsub(&light->position, &p);
-			else 
-				l = light->direction;
-			ft_vectornorm(&l);
-			n_dot_l = ft_vectordot(&n, &l);
-
+			l = light->direction;
+		ft_vectornorm(&l);
+		n_dot_l = ft_vectordot(&n, &l);
 			if (n_dot_l > 0)
-			{
-				shine_int +=  0.4 * pow(clamp(ft_calc_shine(l, p, n), 0., 1.), *shine);
-				intensity += light->intensity * n_dot_l;	
-			}
+		{
+			shine_int +=  0.4 * pow(clamp(ft_calc_shine(l, p, n), 0., 1.), *shine);
+			intensity += light->intensity * n_dot_l;
 		}
-    return (intensity + shine_int);
+	}
+	return (intensity + shine_int);
 }

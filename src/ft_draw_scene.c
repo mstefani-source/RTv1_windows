@@ -40,9 +40,8 @@ int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *lt)
 	f_obj = objects;
 	point = INT_MAX;
 	closest_object.type = 0;
-	
 
-	// пересекает ли луч из камеры какую ибо фигуру?
+	// пересекает ли луч из камеры какую либо фигуру?
 	while (objects)
 	{
 		if (objects->type == 1)
@@ -51,7 +50,9 @@ int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *lt)
 			sol = ft_intersectrayplan(cam_pos, &d_vec, objects);
 		if (objects->type == 3)
 			sol = ft_intersectcyl(cam_pos, &d_vec, objects);	
-	
+		if (objects->type == 4)
+			sol = ft_intersectcone(cam_pos, &d_vec, objects);
+
 		if ((sol->t1 > 1) && (sol->t1 < INT_MAX) && (sol->t1 < point)) 
 		{
 			point = sol->t1;
@@ -75,35 +76,33 @@ int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *lt)
 		n = closest_object.norm; 
 	if (closest_object.type == 3)
 	{
-
-	t_vec cp = ft_vectorsub(&p, &closest_object.center);
-	ft_vectornorm(&closest_object.norm);
-	ft_vectornorm(&cp);
-	double a = ft_vectordot(&cp,&closest_object.norm);
-	t_vec q = ft_vectorscale(&closest_object.norm, a);
-	n = ft_vectorsub(&cp, &q);
+		t_vec cp = ft_vectorsub(&p, &closest_object.center);
+		ft_vectornorm(&closest_object.norm);
+		ft_vectornorm(&cp);
+		double a = ft_vectordot(&cp,&closest_object.norm);
+		t_vec q = ft_vectorscale(&closest_object.norm, a);
+		n = ft_vectorsub(&cp, &q);
 	}
-
-/* 	t_vec temp1 = ft_vectorsub(&p, &closest_object.center);
-	double m = ft_vectordot(&temp1, &closest_object.norm);
-	t_vec temp2 = ft_vectorscale(&closest_object.norm, m);
-	n = ft_vectoradd(&temp1, &temp2); */
-
-/* 		t_vec tmp = ft_vectorscale(&closest_object.norm, point);					// V - normale
-		t_vec oc = ft_vectorsub(cam_pos, &closest_object.center);					// oc - вектор от центра до камеры
-		double m = ft_vectordot(&d_vec, &tmp) + ft_vectordot(&oc, &closest_object.norm); // D | V * t  +  X | V
-		tmp = ft_vectorsub(&p, &closest_object.center); 
-		oc = ft_vectorscale(&closest_object.norm, m);
-		n =  ft_vectorsub(&tmp, &oc);   //nrm( P - C - V * m ) 
-		//m = D|V * t + X|V
-  	 	//N = nrm(P - C - V * m)
-	}*/
+	if (closest_object.type == 4)
+	{
+		t_vec cp = ft_vectorsub(&p, &closest_object.center);
+		ft_vectornorm(&closest_object.norm);
+		ft_vectornorm(&cp);
+		double a = ft_vectordot(&cp,&closest_object.norm);
+		t_vec q = ft_vectorscale(&closest_object.norm, a);
+		n = ft_vectorsub(&cp, &q);
+	}
 	ft_vectornorm(&n);							 // нормаль в этой точке
 
 	while (lt)
 	{
-//		if (ft_check_shadow(p, lt, f_obj) == 0)
+		if (lt->type == 1)
+		{
 			ltt += ft_calc_light(n, p, lt, &closest_object.shine);
+		}
+		else
+			if (ft_check_shadow(p, lt, f_obj) == 0)
+				ltt += ft_calc_light(n, p, lt, &closest_object.shine);
 		lt = lt->next;
 	}
 	ltt = clamp(ltt, 0., 1.);

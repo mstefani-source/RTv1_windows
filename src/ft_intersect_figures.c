@@ -67,5 +67,30 @@ t_solution		*ft_intersectcyl(t_vec *cam_pos, t_vec *d, t_object *obj)
    	sol->t2 = (-k2 - sqrt(discriminant)) / (2 * k1);
     sol->color = obj->color;
     return (sol);
+}
 
+t_solution		*ft_intersectcone(t_vec *cam_pos, t_vec *d, t_object *obj)
+{
+	t_solution	*sol;
+	double		k = 0.9679;
+	t_vec		oc;
+	double 		k1;
+	double 		k2;
+	double 		k3;
+	double 		discriminant;
+
+	sol = (t_solution*)malloc(sizeof(t_solution));
+	ft_initsol(sol);
+	oc = ft_vectorsub(cam_pos, &obj->center);
+
+	k1 = ft_vectordot(d, d) - ft_vectordot(d, &(obj->norm)) * ft_vectordot(d, &(obj->norm)) * (0.2 + k * k);
+	k2 = 2 * ft_vectordot(&oc, d) - (ft_vectordot(d, &(obj->norm)) * ft_vectordot(&oc, &(obj->norm)) * (0.2 + k * k));
+	k3 = ft_vectordot(&oc, &oc) - pow(obj->radius, 2) * (0.2 + k * k);
+	discriminant = pow(k2 , 2) - 4 * k1 * k3;
+	if ((discriminant) < 0)
+		return sol;
+	sol->t1 = (-k2 + sqrt(discriminant)) / (2 * k1);
+	sol->t2 = (-k2 - sqrt(discriminant)) / (2 * k1);
+	sol->color = obj->color;
+	return (sol);
 }

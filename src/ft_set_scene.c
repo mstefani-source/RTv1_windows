@@ -7,11 +7,11 @@ t_vec		*ft_setcam_position(int x, int y, int z)
 	cam_pos = (t_vec*)malloc(sizeof(t_vec));
 	cam_pos->x = 0;
 	cam_pos->y = 0;
-	cam_pos->z = 0;
+	cam_pos->z = 0.5;
 	return (cam_pos);
 }
 
-t_viewport   *ft_set_portale(int d, int vw, int vh)
+t_viewport   *ft_set_portale(double d, double vw, double vh)
 {
 	t_viewport *portale;
 	
@@ -24,58 +24,65 @@ t_viewport   *ft_set_portale(int d, int vw, int vh)
 
 t_object	*ft_set_objects(char *line)
 {
-	t_object	*object1, *object2, *object3, *object4, *object5;
+	t_object	*object1, *object2, *object3, *object4, *object5, *object6;
 
 	object1 = (t_object*)malloc(sizeof(t_object));
 	object2 = (t_object*)malloc(sizeof(t_object));
 	object3 = (t_object*)malloc(sizeof(t_object));
 	object4 = (t_object*)malloc(sizeof(t_object));
 	object5 = (t_object*)malloc(sizeof(t_object));
+	object6 = (t_object*)malloc(sizeof(t_object));
 
-	object1->type = 1;
-	object1->norm = (t_vec){0, 1, 0};
-	object1->center = (t_vec){-2, -1, 16};
-	object1->radius = 3;
+	object1->type = 1;      // красный шар
+	object1->norm = (t_vec){0, 0, 0};
+	object1->center = (t_vec){1, 0, 4};
+	object1->radius = 1;
 	object1->shine = 500;
 	object1->color = (t_color){255, 0, 0};
 	object1->next = object2;
 
-	object2->type = 1;
-	object2->center = (t_vec){1, 0, 4};
+	object2->type = 1;       // синий шар
+	object2->center = (t_vec){-1, 1, 3};
 	object2->radius = 1;
 	object2->shine = 50;
 	object2->color = (t_color){0, 0, 255};
 	object2->next = object3;
 
-	object3->type = 1;
-	object3->center = (t_vec){-1, 2, 5};
+	object3->type = 1;		// зеленый шар
+	object3->center = (t_vec){-1, 1, 6};
 	object3->radius = 1;
 	object3->shine = 1000;
 	object3->color = (t_color){0, 255, 0};
 	object3->next = object4;
 
-	object4->type = 3;
+	object4->type = 3;     // поверхность
 	object4->norm = (t_vec){0, 1, 0};
-	object4->center = (t_vec){0, 0, 16};
+	object4->center = (t_vec){0, 0, 6};
 	object4->shine = 500;
-	object4->radius = 3;
+	object4->radius = 1;
 	object4->color = (t_color){127, 0, 255};
-	object4->next = object5;
+	object4->next = object6;
 
-	object5->type = 2;
-	object5->norm = (t_vec){0, 1, 1};
-	object5->center = (t_vec){0, 0, 19};
-	object5->shine = 500;
+	object5->type = 2;     // цилиндр
+	object5->norm = (t_vec){0, 1, 0};
+	object5->center = (t_vec){0, -1, 0};
+	object5->shine = 300;
 	object5->radius = 3;
 	object5->color = (t_color){243, 123, 148};
-	object5->next = NULL;
+	object5->next = object6;
 
+	object6->type = 4;     // конус
+	object6->norm = (t_vec){0, 1, 0};
+	object6->center = (t_vec){0, 0, 144};
+	object6->shine = 300;
+	object6->radius = 0.1;
+	object6->color = (t_color){255, 0, 255};
+	object6->next = NULL;
 
-
-	return (object1);
+	return (object6);
 }
 
-t_light		*ft_set_light(int type, float intent, t_vec pos, t_vec dir) 
+t_light		*ft_set_light(int type, double intent, t_vec pos, t_vec dir)
 {
 	t_light 	*light1,*light2, *light3;
 	
@@ -90,16 +97,17 @@ t_light		*ft_set_light(int type, float intent, t_vec pos, t_vec dir)
 	light1->color = (t_color){255, 255, 255};
 	light1->next = light2;
 
-	light2->type = 2;
-	light2->intensity = 0.5;
-	light2->position = (t_vec){4, 4, 0};
+	light2->type = 2; 			// точечный источник без направления
+	light2->intensity = 0.2;
+	light2->position = (t_vec){30, 20, -50};
+	light2->direction = (t_vec){-1, -1, -4};
 	light2->color = (t_color){255, 255, 255};
 	light2->next = light3;
 	
-	light3->type = 3;
+	light3->type = 2;
 	light3->intensity = 0.2;
-	light3->position = (t_vec){1, 6, 4};
-	light3->direction = (t_vec){1, 4, 4};
+	light3->position = (t_vec){-30, 0, -50};
+	light3->direction = (t_vec){-1, -1, -4};
 	light3->color = (t_color){255, 255, 255};
 	light3->next = NULL;
 	return (light1);
@@ -116,6 +124,6 @@ t_scene		*ft_set_scene(char *file)
 	rtv->cam_pos = ft_setcam_position(0, 0, 0);
 	rtv->portale = ft_set_portale(1.0, 1.0, 1.0);
 	rtv->objects = ft_set_objects("sp 0.0,0.0,20.6 12.6 10,0,255");
-	rtv->light = ft_set_light(2, 0.3, (t_vec){0, 5, -14}, (t_vec){0, 0, 0});
+	rtv->light = ft_set_light(1, 0.2, (t_vec){0, 5, 14}, (t_vec){0, 0, 1});
 	return (rtv);
 }
