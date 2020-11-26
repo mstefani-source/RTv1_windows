@@ -16,8 +16,8 @@ t_vec	CanvasToViewport(int i, t_scene *rtv)
 {
 	t_vec res;
 
-	res.x = - rtv->wd / 2;
-	res.y = - rtv->ht / 2;
+	res.x = - rtv->wd / 2.0;
+	res.y = - rtv->ht / 2.0;
 
 	res.x = ((i % rtv->wd) - rtv->wd / 2) * rtv->portale->vw / rtv->wd; 
 	res.y = -((i / rtv->ht) - rtv->ht / 2) * rtv->portale->vh / rtv->ht;

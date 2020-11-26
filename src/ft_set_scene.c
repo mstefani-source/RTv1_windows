@@ -7,7 +7,7 @@ t_vec		*ft_setcam_position(int x, int y, int z)
 	cam_pos = (t_vec*)malloc(sizeof(t_vec));
 	cam_pos->x = 0;
 	cam_pos->y = 0;
-	cam_pos->z = 0.5;
+	cam_pos->z = 0;
 	return (cam_pos);
 }
 
