@@ -37,8 +37,9 @@ typedef	struct		s_light
 {	
 	t_vec			position;
 	t_vec			direction;
-	t_color			color;
+	t_color			col;
 	double			intensity;
+	double 			l;
 	int				type;
 	struct s_light	*next;
 }					t_light;
@@ -47,7 +48,7 @@ typedef struct		s_object
 {
 	t_vec			n;
 	t_vec			center;
-	t_color			color;
+	t_color			col;
 	double			radius;
 	double			shine;
 	int 			type;
@@ -88,12 +89,13 @@ t_solution 	*ft_intersectraysphere(t_vec *cam_pos, t_vec *d, t_object *obj);
 t_solution	*ft_intersecrayplan(t_vec *cam_pos, t_vec *d_vec, t_object *obj);
 t_solution	*ft_intersectcyl(t_vec *cam_pos, t_vec *d, t_object *obj);
 t_solution	*ft_intersectcone(t_vec *cam_pos, t_vec *d, t_object *obj);
+t_solution	*ft_getsol(t_vec p, t_vec vec_to_light, t_object *objects);
+t_solution 	*ft_initsol();
 t_mlsdl		*ft_init_window(int width, int height);
 t_scene		*ft_set_scene(char *file);
 int		    ft_draw_scene(t_mlsdl *sdl, t_scene *rtv);
 int			ft_check_shadow(t_vec p, t_light *l, t_object *objects);
-double		ft_calc_light(t_vec n, t_vec p, t_light *light, double const *shine);
+double		ft_calc_light(t_vec n, t_vec p, t_light *light, double const *shn);
 double		clamp(double val, double l, double r);
-t_solution 	*ft_initsol();
 
 #endif

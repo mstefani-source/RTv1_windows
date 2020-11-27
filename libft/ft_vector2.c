@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vector.c                                        :+:      :+:    :+:   */
+/*   ft_vector2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstefani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,42 +12,30 @@
 
 #include "libft.h"
 
-t_vec	ft_vectorscale(t_vec *v, double n)
+double	ft_vdot(t_vec *v1, t_vec *v2)
 {
-	t_vec	res;
+	double	res;
 
-	res.x = v->x * n;
-	res.y = v->y * n;
-	res.z = v->z * n;
+	res = v1->x * v2->x + v1->y * v2->y + v1->z * v2->z;
 	return (res);
 }
 
-t_vec	ft_vectorsub(t_vec *v1, t_vec *v2)
+double	ft_vectorlen(t_vec *v)
 {
-	t_vec	sub;
-
-	sub.x = v1->x - v2->x;
-	sub.y = v1->y - v2->y;
-	sub.z = v1->z - v2->z;
-	return (sub);
+	return (sqrt(v->x * v->x + v->y * v->y + v->z * v->z));
 }
 
-t_vec	ft_vectorcross(t_vec *v1, t_vec *v2)
+t_vec	ft_vectoradd(t_vec *v1, t_vec *v2)
 {
-	t_vec	v;
-
-	v.x = v1->y * v2->z - v1->z * v2->y;
-	v.y = v1->z * v2->x - v1->x * v2->z;
-	v.z = v1->x * v2->y - v1->y * v2->x;
-	return (v);
+	return ((t_vec){v1->x + v2->x, v1->y + v2->y, v1->z + v2->z});
 }
 
-void	ft_vectornorm(t_vec *v)
+double	ft_vec_proj_vec(t_vec *v1, t_vec *v2)
 {
-	double	n;
+	double scal;
+	double len;
 
-	n = 1.0 / sqrt(v->x * v->x + v->y * v->y + v->z * v->z);
-	v->x *= n;
-	v->y *= n;
-	v->z *= n;
+	scal = ft_vdot(v1, v2);
+	len = ft_vectorlen(v2);
+	return (scal / len);
 }

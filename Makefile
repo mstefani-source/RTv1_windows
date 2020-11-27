@@ -1,6 +1,6 @@
 NAME = RTv1
 
-SRC = src/RTv1.c \
+SRC = src/rtv.c \
 	gnl/get_next_line.c \
 	src/ft_init_window.c \
 	src/ft_draw_scene.c \
@@ -22,7 +22,7 @@ all: $(NAME)
 $(NAME): $(LIBOBJ) $(D_SDL)
 		make -C ./libft
 		make -C ./mlsdl
-		gcc $(CFLAGS) $(LIBOBJ) $(INCLUDES) -L./libft  $(SDLFLAGS) -lft -lsdl -lm -lSDL2 -lSDL2_image -o $(NAME)
+		gcc $(CFLAGS) $(LIBOBJ) $(INCLUDES) -L./libft -L./mlsdl $(SDLFLAGS) -lft -lsdl -lm -lSDL2 -lSDL2_image -o $(NAME)
 %.o:%.c include/RTv1.h
 		gcc -MD -g -O0 -c $<  -o $@
 

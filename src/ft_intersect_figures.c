@@ -42,7 +42,7 @@ t_solution		*ft_intersectraysphere(t_vec *cam_pos, t_vec *d, t_object *obj)
 		return (sol);
 	sol->t1 = (-k2 + sqrt(discriminant)) / (2 * ft_vdot(d, d));
 	sol->t2 = (-k2 - sqrt(discriminant)) / (2 * ft_vdot(d, d));
-	sol->color = obj->color;
+	sol->color = obj->col;
 	return (sol);
 }
 
@@ -75,7 +75,7 @@ t_solution		*ft_intersectcyl(t_vec *cam_pos, t_vec *d, t_object *obj)
 		return (sol);
 	sol->t1 = (-k2 + sqrt(pow(k2, 2) - 4 * k1 * k3)) / (2 * k1);
 	sol->t2 = (-k2 - sqrt(pow(k2, 2) - 4 * k1 * k3)) / (2 * k1);
-	sol->color = obj->color;
+	sol->color = obj->col;
 	return (sol);
 }
 
@@ -98,6 +98,6 @@ t_solution		*ft_intersectcone(t_vec *cam_pos, t_vec *d, t_object *obj)
 		return (sol);
 	sol->t1 = (-k2 + sqrt(pow(k2, 2) - 4 * k1 * k3)) / (2 * k1);
 	sol->t2 = (-k2 - sqrt(pow(k2, 2) - 4 * k1 * k3)) / (2 * k1);
-	sol->color = obj->color;
+	sol->color = obj->col;
 	return (sol);
 }

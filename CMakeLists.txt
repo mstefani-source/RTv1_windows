@@ -89,6 +89,7 @@ set(SOURCE_FILES
         libft/ft_tolower.c
         libft/ft_toupper.c
         libft/ft_vector.c
+        libft/ft_vector2.c
         mlsdl/mlsdl_close_window.c
         mlsdl/mlsdl_event_listening.c
         mlsdl/mlsdl_get_data_addr.c
@@ -106,8 +107,8 @@ set(SOURCE_FILES
         src/ft_intersect_figures.c
         src/ft_light_calc.c
         src/ft_set_scene.c
-        src/RTv1.c
-        src/RTv1_test.c)
+        src/rtv.c
+        )
 
 add_executable(RTv1 ${SOURCE_FILES})
 

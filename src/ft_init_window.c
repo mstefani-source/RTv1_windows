@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_init_window.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mstefani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/16 17:06:43 by mstefani          #+#    #+#             */
+/*   Updated: 2019/09/22 17:51:13 by mstefani         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../mlsdl/mlsdl.h"
 #include "../libft/libft.h"
 #include "../include/RTv1.h"
@@ -5,8 +17,8 @@
 t_mlsdl		*ft_init_window(int w, int h)
 {
 	t_mlsdl	*sdl_wind;
-	int 	size;
-	
+	int		size;
+
 	if (!(sdl_wind = (t_mlsdl*)ft_memalloc(sizeof(t_mlsdl))))
 		exit(2);
 	if (mlsdl_init() != 1)
