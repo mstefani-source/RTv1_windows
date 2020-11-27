@@ -38,22 +38,21 @@ int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *lt)
 
 	ltt = 0.08;
 	f_obj = objects;
+	sol =  ft_initsol();
 	point = INT_MAX;
 	closest_object.type = 0;
 
-	// пересекает ли луч из камеры какую либо фигуру?
 	while (objects)
 	{
 		if (objects->type == 1)
 	    	sol = ft_intersectraysphere(cam_pos, &d_vec, objects);
   		if (objects->type == 2)
-			sol = ft_intersectrayplan(cam_pos, &d_vec, objects);
+			sol = ft_intersecrayplan(cam_pos, &d_vec, objects);
 		if (objects->type == 3)
 			sol = ft_intersectcyl(cam_pos, &d_vec, objects);	
 		if (objects->type == 4)
 			sol = ft_intersectcone(cam_pos, &d_vec, objects);
-
-		if ((sol->t1 > 1) && (sol->t1 < INT_MAX) && (sol->t1 < point)) 
+		if ((sol->t1 > 1) && (sol->t1 < INT_MAX) && (sol->t1 < point))
 		{
 			point = sol->t1;
 			closest_object = *objects;
@@ -67,32 +66,22 @@ int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *lt)
 	}
 	if (point == INT_MAX)
 		return (0);
-	
-	d_vec = ft_vectorscale(&d_vec, point);  	// вычисляем 
-	p = ft_vectoradd(cam_pos, &d_vec);   	  	// вектор до точки
+	d_vec = ft_vectorscale(&d_vec,point);
+	p = ft_vectoradd(cam_pos, &d_vec);
  	if (closest_object.type == 1)
-		n = ft_vectorsub(&p, &closest_object.center); // вычисяем 
+		n = ft_vectorsub(&p, &closest_object.center);
 	if (closest_object.type == 2)
-		n = closest_object.norm; 
-	if (closest_object.type == 3)
+		n = closest_object.n;
+	if ((closest_object.type == 3) || (closest_object.type == 4))
 	{
 		t_vec cp = ft_vectorsub(&p, &closest_object.center);
-		ft_vectornorm(&closest_object.norm);
+		ft_vectornorm(&closest_object.n);
 		ft_vectornorm(&cp);
-		double a = ft_vectordot(&cp,&closest_object.norm);
-		t_vec q = ft_vectorscale(&closest_object.norm, a);
+		double a = ft_vdot(&cp,&closest_object.n);
+		t_vec q = ft_vectorscale(&closest_object.n, a);
 		n = ft_vectorsub(&cp, &q);
 	}
-	if (closest_object.type == 4)
-	{
-		t_vec cp = ft_vectorsub(&p, &closest_object.center);
-		ft_vectornorm(&closest_object.norm);
-		ft_vectornorm(&cp);
-		double a = ft_vectordot(&cp,&closest_object.norm);
-		t_vec q = ft_vectorscale(&closest_object.norm, a);
-		n = ft_vectorsub(&cp, &q);
-	}
-	ft_vectornorm(&n);							 // нормаль в этой точке
+	ft_vectornorm(&n);
 
 	while (lt)
 	{

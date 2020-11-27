@@ -108,7 +108,7 @@ t_vec				ft_vectorscale(t_vec *v, double n);
 t_vec				ft_vectorsub(t_vec *v1, t_vec *v2);
 t_vec				ft_vectorcross(t_vec *v1, t_vec *v2);
 void				ft_vectornorm(t_vec *v);
-double				ft_vectordot(t_vec *v1, t_vec *v2);
+double				ft_vdot(t_vec *v1, t_vec *v2);
 double				ft_vectorlen(t_vec *v);
 t_vec				ft_vectoradd(t_vec *v1, t_vec *v2);
 double				ft_vec_proj_vec(t_vec *v1, t_vec *v2);

@@ -34,7 +34,7 @@ t_object	*ft_set_objects(char *line)
 	object6 = (t_object*)malloc(sizeof(t_object));
 
 	object1->type = 1;      // красный шар
-	object1->norm = (t_vec){0, 0, 0};
+	object1->n = (t_vec){0, 0, 0};
 	object1->center = (t_vec){1, 0, 4};
 	object1->radius = 1;
 	object1->shine = 500;
@@ -49,37 +49,37 @@ t_object	*ft_set_objects(char *line)
 	object2->next = object3;
 
 	object3->type = 1;		// зеленый шар
-	object3->center = (t_vec){-1, 1, 6};
+	object3->center = (t_vec){-1, -1, 6};
 	object3->radius = 1;
 	object3->shine = 1000;
 	object3->color = (t_color){0, 255, 0};
 	object3->next = object4;
 
-	object4->type = 3;     // поверхность
-	object4->norm = (t_vec){0, 1, 0};
+	object4->type = 3;     // цилиндр
+	object4->n = (t_vec){0, 1, 0};
 	object4->center = (t_vec){0, 0, 6};
 	object4->shine = 500;
 	object4->radius = 1;
 	object4->color = (t_color){127, 0, 255};
-	object4->next = object6;
+	object4->next = object5;
 
-	object5->type = 2;     // цилиндр
-	object5->norm = (t_vec){0, 1, 0};
-	object5->center = (t_vec){0, -1, 0};
+	object5->type = 2;     // поверхность
+	object5->n = (t_vec){0, 1, 0};
+	object5->center = (t_vec){0, -2, 0};
 	object5->shine = 300;
 	object5->radius = 3;
 	object5->color = (t_color){243, 123, 148};
 	object5->next = object6;
 
 	object6->type = 4;     // конус
-	object6->norm = (t_vec){0, 1, 0};
-	object6->center = (t_vec){0, 0, 144};
+	object6->n = (t_vec){0, 1, 0};
+	object6->center = (t_vec){-2, 0, 5.5};
 	object6->shine = 300;
-	object6->radius = 0.1;
+	object6->radius = 0.01;
 	object6->color = (t_color){255, 0, 255};
 	object6->next = NULL;
 
-	return (object6);
+	return (object1);
 }
 
 t_light		*ft_set_light(int type, double intent, t_vec pos, t_vec dir)

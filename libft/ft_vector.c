@@ -52,7 +52,7 @@ void	ft_vectornorm(t_vec *v)
 	v->z *= n;
 }
 
-double	ft_vectordot(t_vec *v1, t_vec *v2)
+double	ft_vdot(t_vec *v1, t_vec *v2)
 {
 	double	res;
 
@@ -75,7 +75,7 @@ double	ft_vec_proj_vec(t_vec *v1, t_vec *v2)
 	double scal;
 	double len;
 
-	scal = ft_vectordot(v1, v2);
+	scal = ft_vdot(v1, v2);
 	len = ft_vectorlen(v2);
 	return(scal / len);
 }

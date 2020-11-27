@@ -26,14 +26,6 @@ typedef struct		s_color
 	int				b;
 }					t_color;
 
-typedef struct		s_solution
-{	
-	t_color			color;
-	double			t1;
-	double			t2;
-	int				flag;
-}					t_solution;
-
 typedef struct      s_viewport
 {
     double			d;
@@ -53,7 +45,7 @@ typedef	struct		s_light
 
 typedef struct		s_object
 {
-	t_vec			norm;
+	t_vec			n;
 	t_vec			center;
 	t_color			color;
 	double			radius;
@@ -83,8 +75,17 @@ typedef struct		s_wnd
 	int				endian;
 }					t_wnd;
 
+typedef struct		s_solution
+{
+	t_color			color;
+	double			t1;
+	double			t2;
+	double			point;
+	t_object		*object;
+}					t_solution;
+
 t_solution 	*ft_intersectraysphere(t_vec *cam_pos, t_vec *d, t_object *obj);
-t_solution	*ft_intersectrayplan(t_vec *cam_pos, t_vec *d_vec, t_object *obj);
+t_solution	*ft_intersecrayplan(t_vec *cam_pos, t_vec *d_vec, t_object *obj);
 t_solution	*ft_intersectcyl(t_vec *cam_pos, t_vec *d, t_object *obj);
 t_solution	*ft_intersectcone(t_vec *cam_pos, t_vec *d, t_object *obj);
 t_mlsdl		*ft_init_window(int width, int height);
@@ -93,5 +94,6 @@ int		    ft_draw_scene(t_mlsdl *sdl, t_scene *rtv);
 int			ft_check_shadow(t_vec p, t_light *l, t_object *objects);
 double		ft_calc_light(t_vec n, t_vec p, t_light *light, double const *shine);
 double		clamp(double val, double l, double r);
+t_solution 	*ft_initsol();
 
 #endif

@@ -18,12 +18,12 @@ double		ft_calc_shine(t_vec l, t_vec p, t_vec n)
 	to_me = ft_vectorscale(&p, -1);
 	ft_vectornorm(&to_me);
 
-	local_norm = ft_vectorscale(&n ,ft_vectordot(&n, &l));
+	local_norm = ft_vectorscale(&n ,ft_vdot(&n, &l));
 	reflect_vec = ft_vectorsub(&local_norm, &l);
 	reflect_vec = ft_vectoradd(&local_norm, &reflect_vec);
 	ft_vectornorm(&reflect_vec);
 
-	return (ft_vectordot(&reflect_vec, &to_me));
+	return (ft_vdot(&reflect_vec, &to_me));
 }
 
 int			ft_check_shadow(t_vec p, t_light *l, t_object *objects)
@@ -41,7 +41,7 @@ int			ft_check_shadow(t_vec p, t_light *l, t_object *objects)
 		if (objects->type == 1)
 			sol = ft_intersectraysphere(&p, &vec_to_light, objects);
 		if (objects->type == 2)
-			sol = ft_intersectrayplan(&p, &vec_to_light, objects);
+			sol = ft_intersecrayplan(&p, &vec_to_light, objects);
 		if (objects->type == 3)
 			sol = ft_intersectcyl(&p, &vec_to_light, objects);
 		if (objects->type == 4)
@@ -77,7 +77,7 @@ double		ft_calc_light(t_vec n, t_vec p, t_light *light, double const *shine)
 		else
 			l = light->direction;
 		ft_vectornorm(&l);
-		n_dot_l = ft_vectordot(&n, &l);
+		n_dot_l = ft_vdot(&n, &l);
 			if (n_dot_l > 0)
 		{
 			shine_int +=  0.4 * pow(clamp(ft_calc_shine(l, p, n), 0., 1.), *shine);
