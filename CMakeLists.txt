@@ -108,7 +108,7 @@ set(SOURCE_FILES
         src/ft_light_calc.c
         src/ft_set_scene.c
         src/rtv.c
-        )
+        src/ft_calc.c)
 
 add_executable(RTv1 ${SOURCE_FILES})
 

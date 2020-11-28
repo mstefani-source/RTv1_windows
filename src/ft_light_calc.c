@@ -83,7 +83,6 @@ double			ft_calc_light(t_vec n, t_vec p, t_light *light, double const *s)
 	double	n_dot_l;
 	double	shine_int;
 
-	n_dot_l = 0.;
 	intensity = 0.0;
 	shine_int = 0.0;
 	if (light->type == 1)
