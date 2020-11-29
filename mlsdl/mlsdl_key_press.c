@@ -15,5 +15,5 @@
 void		key_press(int keyi, void (*ptr)(void))
 {
 	if (keyi)
-		ptr; 
+		ptr;
 }

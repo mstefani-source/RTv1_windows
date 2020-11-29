@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/RTv1.h"
+#include "../include/rtv.h"
 
 double			clamp(double val, double l, double r)
 {

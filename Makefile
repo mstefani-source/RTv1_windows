@@ -6,7 +6,10 @@ SRC = src/rtv.c \
 	src/ft_draw_scene.c \
 	src/ft_set_scene.c \
 	src/ft_light_calc.c \
-	src/ft_intersect_figures.c
+	src/ft_intersect_figures.c \
+	src/ft_parce_scene.c \
+	src/ft_atof.c \
+	src/ft_calc.c
 
 INCLUDES = -I/usr/local/include -ISDL/include/ -Iinclude -Imlsdl -Ilibft
 
@@ -23,7 +26,7 @@ $(NAME): $(LIBOBJ) $(D_SDL)
 		make -C ./libft
 		make -C ./mlsdl
 		gcc $(CFLAGS) $(LIBOBJ) $(INCLUDES) -L./libft -L./mlsdl $(SDLFLAGS) -lft -lsdl -lm -lSDL2 -lSDL2_image -o $(NAME)
-%.o:%.c include/RTv1.h
+%.o:%.c include/rtv.h
 		gcc -MD -g -O0 -c $<  -o $@
 
 clean:
@@ -34,6 +37,7 @@ clean:
 
 fclean: clean
 	make -C ./libft fclean
+	make -C ./mlsdl fclean
 	-rm -f $(NAME)
 	-rm -f src/*.d
 

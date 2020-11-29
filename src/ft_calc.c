@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/RTv1.h"
+#include "../include/rtv.h"
 
 t_vec		ft_calc_norm(t_vec p, t_object cl_o)
 {
@@ -60,4 +60,15 @@ t_p_o		ft_find_point(t_vec *cam_pos, t_vec d_vec, t_object *objects)
 		objects = objects->next;
 	}
 	return (p_o);
+}
+
+t_viewport   *ft_set_portale(double d, double vw, double vh)
+{
+	t_viewport *portale;
+
+	portale = (t_viewport*)malloc(sizeof(t_viewport));
+	portale->d = d;
+	portale->vw = vw;
+	portale->vh = vh;
+	return (portale);
 }

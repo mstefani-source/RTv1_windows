@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/RTv1.h"
+#include "../include/rtv.h"
 
 t_solution		*ft_initsol(void)
 {

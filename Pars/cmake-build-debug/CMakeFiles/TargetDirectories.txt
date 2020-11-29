@@ -1,0 +1,3 @@
+/Users/skale/Desktop/Pars/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/skale/Desktop/Pars/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/skale/Desktop/Pars/cmake-build-debug/CMakeFiles/Pars.dir

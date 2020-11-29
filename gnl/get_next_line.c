@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/RTv1.h"
+#include "../include/rtv.h"
 #include "get_next_line.h"
 
 char			*ft_remove_n(char **chr)

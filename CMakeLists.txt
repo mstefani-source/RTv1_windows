@@ -19,6 +19,8 @@ link_directories(SDL/lib)
 
 set(SOURCE_FILES
         gnl/get_next_line.c
+        gnl/get_next_line.h
+        include/rtv.h
         libft/ft_abs.c
         libft/ft_atoi.c
         libft/ft_atoi_base.c
@@ -90,6 +92,8 @@ set(SOURCE_FILES
         libft/ft_toupper.c
         libft/ft_vector.c
         libft/ft_vector2.c
+        libft/libft.h
+        mlsdl/mlsdl.h
         mlsdl/mlsdl_close_window.c
         mlsdl/mlsdl_event_listening.c
         mlsdl/mlsdl_get_data_addr.c
@@ -102,13 +106,15 @@ set(SOURCE_FILES
         mlsdl/mlsdl_new_window.c
         mlsdl/mlsdl_put_texture_to_render.c
         mlsdl/mlsdl_update_texture.c
+        src/ft_calc.c
         src/ft_draw_scene.c
         src/ft_init_window.c
         src/ft_intersect_figures.c
         src/ft_light_calc.c
         src/ft_set_scene.c
-        src/rtv.c
-        src/ft_calc.c)
+        src/ft_parce_scene.c
+        src/ft_atof.c
+        src/rtv.c)
 
 add_executable(RTv1 ${SOURCE_FILES})
 

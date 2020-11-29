@@ -12,7 +12,7 @@
 
 #include "../mlsdl/mlsdl.h"
 #include "../libft/libft.h"
-#include "../include/RTv1.h"
+#include "../include/rtv.h"
 
 t_mlsdl		*ft_init_window(int w, int h)
 {

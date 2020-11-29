@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/RTv1.h"
+#include "../include/rtv.h"
 
 int		ft_fincolor(t_np np, t_object *f_obj, t_light *lt, t_object cl_o)
 {

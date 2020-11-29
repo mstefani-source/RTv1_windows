@@ -1,4 +1,4 @@
-#include "../include/RTv1.h"
+#include "../include/rtv.h"
 
 t_vec		*ft_setcam_position(int x, int y, int z)
 {
@@ -9,17 +9,6 @@ t_vec		*ft_setcam_position(int x, int y, int z)
 	cam_pos->y = 0;
 	cam_pos->z = 0;
 	return (cam_pos);
-}
-
-t_viewport   *ft_set_portale(double d, double vw, double vh)
-{
-	t_viewport *portale;
-	
-	portale = (t_viewport*)malloc(sizeof(t_viewport));
-	portale->d = 1.0;
-	portale->vw = 1.0;
-	portale->vh = 1.0;
-	return (portale);
 }
 
 t_object	*ft_set_objects(char *line)
