@@ -111,7 +111,7 @@ t_scene		*ft_set_scene(char *file)
 	rtv->ht = 800;
 	rtv->wd = 800;
 	rtv->cam_pos = ft_setcam_position(0, 0, 0);
-	rtv->portale = ft_set_portale(1.0, 1.0, 1.0);
+	rtv->port = ft_set_portale(1.0, 1.0, 1.0);
 	rtv->objects = ft_set_objects("sp 0.0,0.0,20.6 12.6 10,0,255");
 	rtv->light = ft_set_light(1, 0.2, (t_vec){0, 5, 14}, (t_vec){0, 0, 1});
 	return (rtv);

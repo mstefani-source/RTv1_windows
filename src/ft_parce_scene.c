@@ -200,7 +200,7 @@ t_scene *ft_init_rtv(void)
 
 	res = (t_scene*)malloc(sizeof(t_scene));
 	res->objects = (t_object*)malloc(sizeof(t_object));
-	res->portale = (t_viewport*)malloc(sizeof(t_viewport));
+	res->port = (t_viewport*)malloc(sizeof(t_viewport));
 	res->cam_pos = (t_vec *)malloc(sizeof(t_vec));
 	res->light = (t_light*)malloc(sizeof(t_light));
 	res->ht = 0;
@@ -216,12 +216,12 @@ t_scene *ft_build(t_scene *res, char *line)
 	{
 		while (!(ft_isdigit(line[i])))
 			i++;
-		res->wd = ft_atoi(&line[i]);
+		res->wd = ft_atof(&line[i]);
 		while (ft_isdigit(line[i]))
 			i++;
 		while (!(ft_isdigit(line[i])))
 			i++;
-		res->ht = ft_atoi(&line[i]);
+		res->ht = ft_atof(&line[i]);
 
 	}
 	if (line[0] == 'L')
@@ -287,6 +287,6 @@ t_scene		*ft_parce_scene(char *file)
 		res = ft_build(res, line);
 		free(line);
 	}
-	res->portale = ft_set_portale(1.0, 1, 0.3);
+	res->port = ft_set_portale(1.0 + res->cam_pos->z, 1.0, ((res->ht) / (res->wd)) - 0.15);
 	return (res);
 }

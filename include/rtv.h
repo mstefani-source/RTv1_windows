@@ -70,11 +70,11 @@ typedef struct		s_point_and_object
 typedef struct		s_scene
 {
 	t_object		*objects;
-	t_viewport		*portale;
+	t_viewport		*port;
 	t_vec			*cam_pos;
 	t_light			*light;
-	int				wd;
-	int				ht;
+	double			wd;
+	double			ht;
 }					t_scene;
 
 typedef struct		s_wnd

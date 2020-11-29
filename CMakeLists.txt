@@ -111,7 +111,6 @@ set(SOURCE_FILES
         src/ft_init_window.c
         src/ft_intersect_figures.c
         src/ft_light_calc.c
-        src/ft_set_scene.c
         src/ft_parce_scene.c
         src/ft_atof.c
         src/rtv.c)
