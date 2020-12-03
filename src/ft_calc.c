@@ -41,20 +41,15 @@ t_vec		ft_calc_norm(t_vec p, t_object cl_o)
 t_p_o		ft_find_point(t_vec *cam_pos, t_vec d_vec, t_object *objects)
 {
 	t_p_o		p_o;
-	t_solution	*sol;
+	t_solution	sol;
 
 	p_o.point = INT_MAX;
 	while (objects)
 	{
 		sol = ft_getsol(*cam_pos, d_vec, objects);
-		if ((sol->t1 > 1) && (sol->t1 < INT_MAX) && (sol->t1 < p_o.point))
+		if ((sol.t1 > 1) && (sol.t1 < INT_MAX) && (sol.t1 < p_o.point))
 		{
-			p_o.point = sol->t1;
-			p_o.cl_o = *objects;
-		}
-		if ((sol->t2 > 1) && (sol->t2 < INT_MAX) && (sol->t2 < p_o.point))
-		{
-			p_o.point = sol->t2;
+			p_o.point = sol.t1;
 			p_o.cl_o = *objects;
 		}
 		objects = objects->next;
@@ -62,13 +57,21 @@ t_p_o		ft_find_point(t_vec *cam_pos, t_vec d_vec, t_object *objects)
 	return (p_o);
 }
 
-t_viewport   *ft_set_portale(double d, double vw, double vh)
+t_solution	ft_biggest_sol(t_solution sol)
 {
-	t_viewport *portale;
+	double temp;
 
-	portale = (t_viewport*)malloc(sizeof(t_viewport));
-	portale->d = d;
-	portale->vw = vw;
-	portale->vh = vh;
-	return (portale);
+	if (sol.t1 > sol.t2)
+	{
+		temp = sol.t1;
+		sol.t1 = sol.t2;
+		sol.t2 = temp;
+	}
+	if (sol.t1 < 0)
+	{
+		sol.t1 = sol.t2;
+		if (sol.t1 < 0)
+			sol.t1 = INT_MAX;
+	}
+	return sol;
 }

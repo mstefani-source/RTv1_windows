@@ -14,10 +14,9 @@
 # define RTV_RTV_H
 
 # include <stdio.h>
-# include <fcntl.h>
-# include <stdbool.h>
 # include "../mlsdl/mlsdl.h"
 # include "../libft/libft.h"
+# include <fcntl.h>
 # include "../gnl/get_next_line.h"
 
 typedef struct		s_np
@@ -31,6 +30,7 @@ typedef struct		s_color
 	int				r;
 	int				g;
 	int				b;
+	int				i;
 }					t_color;
 
 typedef struct		s_viewport
@@ -70,7 +70,7 @@ typedef struct		s_point_and_object
 typedef struct		s_scene
 {
 	t_object		*objects;
-	t_viewport		*port;
+	t_viewport		*portale;
 	t_vec			*cam_pos;
 	t_light			*light;
 	double			wd;
@@ -94,16 +94,15 @@ typedef struct		s_solution
 	double			t1;
 	double			t2;
 	double			point;
-	t_object		*object;
 }					t_solution;
 
-t_solution			*ft_intersectraysphere(t_vec *cam, t_vec *d, t_object *obj);
-t_solution			*ft_intersecrayplan(t_vec *cam, t_vec *d, t_object *obj);
-t_solution			*ft_intersectcyl(t_vec *cam_pos, t_vec *d, t_object *obj);
-t_solution			*ft_intersectcone(t_vec *cam_pos, t_vec *d, t_object *obj);
-t_solution			*ft_getsol(t_vec p, t_vec vec_to_light, t_object *objects);
+t_solution			ft_intersectraysphere(t_vec *cam, t_vec *d, t_object *obj);
+t_solution			ft_intersecrayplan(t_vec *cam, t_vec *d, t_object *obj);
+t_solution			ft_intersectcyl(t_vec *cam_pos, t_vec *d, t_object *obj);
+t_solution			ft_intersectcone(t_vec *cam_pos, t_vec *d, t_object *obj);
+t_solution			ft_getsol(t_vec p, t_vec vec_to_light, t_object *objects);
 t_vec				ft_calc_norm(t_vec p, t_object cl_o);
-t_solution			*ft_initsol();
+t_solution			ft_initsol();
 t_mlsdl				*ft_init_window(int width, int height);
 t_scene				*ft_set_scene(char *file);
 int					ft_draw_scene(t_mlsdl *sdl, t_scene *rtv);
@@ -112,8 +111,20 @@ double				ft_calc_light(t_vec n, t_vec p, t_light *lt, \
 															double const *shn);
 double				clamp(double val, double l, double r);
 t_p_o				ft_find_point(t_vec *cam_pos, t_vec d_vec, t_object *obj);
-double 				ft_atof(const char *nptr);
-t_viewport   		*ft_set_portale(double d, double vw, double vh);
+double 				ft_atof (const char *nptr);
+int 				ft_next_digit(int i, char *line);
+int 				ft_next_space(int i, char *line);
+t_color 			ft_color(int i, char *line, t_color color);
+t_vec 				ft_vec(int i, char *line, t_vec vec, int type);
+t_light 			*ft_add_light(t_light *light, char *line);
+t_object 			*ft_add_plane(t_object *object, char *line);
+t_object 			*ft_add_sphere(t_object *object, char *line);
+t_object 			*ft_add_cyl(t_object *object, char *line);
+t_viewport          *ft_set_portale(double d, double vw, double vh);
 t_scene				*ft_parce_scene(char *file);
+t_vec				rotate_x(t_vec vec, double a);
+t_vec				rotate_y(t_vec vec, double a);
+t_vec				rotate_z(t_vec vec, double a);
+t_solution			ft_biggest_sol(t_solution sol);
 
 #endif

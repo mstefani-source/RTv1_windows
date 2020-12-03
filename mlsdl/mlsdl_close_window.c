@@ -21,5 +21,5 @@ void	*mlsdl_close_window(t_mlsdl *sdl)
 	if (sdl->pointer)
 		SDL_DestroyWindow(sdl->pointer);
 	SDL_Quit();
-	return (NULL);
+	exit(0);
 }

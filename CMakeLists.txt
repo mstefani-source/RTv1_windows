@@ -107,13 +107,17 @@ set(SOURCE_FILES
         mlsdl/mlsdl_put_texture_to_render.c
         mlsdl/mlsdl_update_texture.c
         src/ft_calc.c
+        src/ft_parce_scene.c
         src/ft_draw_scene.c
         src/ft_init_window.c
         src/ft_intersect_figures.c
         src/ft_light_calc.c
-        src/ft_parce_scene.c
         src/ft_atof.c
-        src/rtv.c)
+        src/ft_pars_in_details.c
+        src/ft_all_objects.c
+        src/ft_atof.c
+        src/ft_parce_scene.c
+        src/rtv.c src/ft_rotate_cam.c)
 
 add_executable(RTv1 ${SOURCE_FILES})
 

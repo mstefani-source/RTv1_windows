@@ -1,55 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   atoi_double.c                                      :+:      :+:    :+:   */
+/*   ft_atof.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skale <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/14 11:08:22 by skale             #+#    #+#             */
-/*   Updated: 2020/11/14 11:41:19 by skale            ###   ########.fr       */
+/*   Created: 2020/12/01 18:20:47 by skale             #+#    #+#             */
+/*   Updated: 2020/12/01 19:27:30 by skale            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/rtv.h"
 
-double ft_atof (const char *nptr)
+double			ft_atof(const char *nptr)
 {
-	int				i;
-	double			nr;
-	int				k;
-	double				s;
-	int z;
+	int			i;
+	double		nr;
+	double		s;
+	int			z;
+	int			k;
 
 	i = 0;
 	nr = 0;
-	k = 1;
 	z = 1;
-	while (nptr[i] == ' ' || (nptr[i] >= '\t' && nptr[i] <= '\r') || (nptr[i] >= 'a' && nptr[i] <= 'z')|| (nptr[i] >= 'A' && nptr[i] <= 'Z'))
+	nr = ft_atoi(&nptr[i]);
+	k = (nptr[i] == '-') ? -1 : 1;
+	nr = nr * k;
+	while ((nptr[i] >= '0' && nptr[i] <= '9') || (nptr[i] == '-'))
 		i++;
-	if (nptr[i] == '-')
-		k = -1;
-	if (nptr[i] == '+' || nptr[i] == '-')
-		i++;
+	(nptr[i] == '.') ? i++ : 0;
 	while ((nptr[i] >= '0') && (nptr[i] <= '9'))
 	{
-		s = nptr[i] - '0';
-		if (k == 1 && (nr > LONG_MAX / 10 || (nr == LONG_MAX / 10 && s > 7)))
-			return (-1);
-		if (k == -1 && (nr > LONG_MAX / 10 || (nr == LONG_MAX / 10 && s > 8)))
-			return (0);
-		nr = nr * 10 + s;
-		i++;
+		z = z * 10;
+		s = nptr[i++] - '0';
+		nr = s / z + nr;
 	}
-	if (nptr[i] == '.')
-	{
-		i++;
-		while ((nptr[i] >= '0') && (nptr[i] <= '9'))
-		{
-			z = z * 10;
-			s = nptr[i] - '0';
-			nr = s / z + nr;
-			i++;
-		}
-	}
-	return (nr * k);
+	return (k * nr);
+}
+
+t_viewport		*ft_set_portale(double d, double vw, double vh)
+{
+	t_viewport	*portale;
+
+	portale = (t_viewport*)malloc(sizeof(t_viewport));
+	portale->d = d;
+	portale->vw = vw;
+	portale->vh = vh;
+	return (portale);
 }

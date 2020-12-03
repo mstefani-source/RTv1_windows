@@ -17,6 +17,8 @@ int		ft_fincolor(t_np np, t_object *f_obj, t_light *lt, t_object cl_o)
 	double	l;
 
 	l = 0.08;
+	t_vec temp = ft_vectorscale(&np.norm, 1e-4);
+	np.pt = ft_vectoradd(&np.pt, &temp);
 	while (lt)
 	{
 		if (lt->type == 1)
@@ -45,39 +47,27 @@ int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *lt)
 	return (ft_fincolor(np, f_obj, lt, p_o.cl_o));
 }
 
-t_vec	canvastoviewport(int i, t_scene *rtv)
-{
-	t_vec res;
-
-	res.x = -rtv->wd / 2.0;
-	res.y = -rtv->ht / 2.0;
-	res.x = ((i % (int)rtv->wd) - rtv->wd / 2) * rtv->port->vw / rtv->wd;
-	res.y = -((i / rtv->ht) - rtv->ht / 2) * rtv->port->vh / rtv->ht;
-	res.z = rtv->port->d;
-	return (res);
-}
-
-int		ft_calc_pixel_color(int point_on_canvas, t_scene *rtv)
-{
-	t_vec	point_on_viewport;
-	t_vec	d_vec;
-	int		color;
-
-	point_on_viewport = canvastoviewport(point_on_canvas, rtv);
-	d_vec = ft_vectorsub(&point_on_viewport, rtv->cam_pos);
-	color = ft_traceray(rtv->cam_pos, d_vec, rtv->objects, rtv->light);
-	return (color);
-}
-
 int		ft_draw_scene(t_mlsdl *sdl, t_scene *rtv)
 {
-	int		x;
+	double ax, ay, az;
+	t_vec direction;
 
-	x = 0;
-	while (x < rtv->wd * rtv->ht)
+	ax = 0 * M_PI / 180.;
+	ay = 15 * M_PI / 180.;
+	az = 10 * M_PI / 180.;
+	for (int x = (int)-rtv->wd / 2; x != rtv->wd / 2; x += 1)
 	{
-		sdl->data->pix[x] = ft_calc_pixel_color(x, rtv);
-		x++;
+		for (int y = (int)-rtv->ht / 2; y != rtv->ht / 2; y += 1)
+		{
+			direction = (t_vec){x / rtv->ht, -y / rtv->ht, 1};
+			ft_vectornorm(&direction);
+			direction = rotate_x(direction, ax);
+			direction = rotate_y(direction, ay);
+			direction = rotate_z(direction, az);
+			sdl->data->pix[(x + (int)rtv->wd / 2) + (int)rtv->wd * \
+			(y + (int)rtv->ht / 2)] = ft_traceray(rtv->cam_pos, \
+			direction, rtv->objects, rtv->light);
+		}
 	}
 	return (0);
 }

@@ -36,9 +36,9 @@ double			ft_shine(t_vec l, t_vec p, t_vec n)
 	return (ft_vdot(&reflect_vec, &to_me));
 }
 
-t_solution		*ft_getsol(t_vec p, t_vec vec_to_light, t_object *objects)
+t_solution		ft_getsol(t_vec p, t_vec vec_to_light, t_object *objects)
 {
-	t_solution	*sol;
+	t_solution	sol;
 
 	if (objects->type == 1)
 		sol = ft_intersectraysphere(&p, &vec_to_light, objects);
@@ -53,24 +53,18 @@ t_solution		*ft_getsol(t_vec p, t_vec vec_to_light, t_object *objects)
 
 int				ft_check_shadow(t_vec p, t_light *l, t_object *objects)
 {
-	t_solution	*sol;
+	t_solution	sol;
 	t_vec		vec_to_light;
-	double		point;
 	double		len_vec_to_light;
 
-	point = INT_MAX;
 	vec_to_light = ft_vectorsub(&(l->position), &p);
 	len_vec_to_light = ft_vectorlen(&vec_to_light);
 	ft_vectornorm(&vec_to_light);
 	while (objects)
 	{
 		sol = ft_getsol(p, vec_to_light, objects);
-		if ((sol->t1 > 0.001) && (sol->t1 < INT_MAX) && (sol->t1 < point))
-			point = sol->t1;
-		if ((sol->t2 > 0.001) && (sol->t2 < INT_MAX) && (sol->t2 < point))
-			point = sol->t2;
-		if (point > 0 && point < len_vec_to_light)
-			return (1);
+		if (sol.t1 != INT_MAX && sol.t1 > 1e-4 && sol.t1 <= len_vec_to_light)
+			return 1;
 		objects = objects->next;
 	}
 	return (0);

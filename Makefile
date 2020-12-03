@@ -4,12 +4,13 @@ SRC = src/rtv.c \
 	gnl/get_next_line.c \
 	src/ft_init_window.c \
 	src/ft_draw_scene.c \
-	src/ft_set_scene.c \
 	src/ft_light_calc.c \
 	src/ft_intersect_figures.c \
-	src/ft_parce_scene.c \
+	src/ft_calc.c \
 	src/ft_atof.c \
-	src/ft_calc.c
+	src/ft_parce_scene.c \
+	src/ft_pars_in_details.c \
+	src/ft_all_objects.c
 
 INCLUDES = -I/usr/local/include -ISDL/include/ -Iinclude -Imlsdl -Ilibft
 

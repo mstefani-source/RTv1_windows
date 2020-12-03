@@ -31,6 +31,7 @@ typedef struct		s_vec
 	double			x;
 	double			y;
 	double			z;
+	int 			i;
 }					t_vec;
 
 int					ft_abs(int d);
