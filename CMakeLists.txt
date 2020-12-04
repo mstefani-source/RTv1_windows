@@ -117,7 +117,8 @@ set(SOURCE_FILES
         src/ft_all_objects.c
         src/ft_atof.c
         src/ft_parce_scene.c
-        src/rtv.c src/ft_rotate_cam.c)
+        src/ft_rotate_cam.c
+        src/rtv.c)
 
 add_executable(RTv1 ${SOURCE_FILES})
 

@@ -73,6 +73,7 @@ typedef struct		s_scene
 	t_viewport		*portale;
 	t_vec			*cam_pos;
 	t_light			*light;
+	t_vec			angle;
 	double			wd;
 	double			ht;
 }					t_scene;
