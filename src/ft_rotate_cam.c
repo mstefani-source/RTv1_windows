@@ -12,7 +12,7 @@
 
 #include "../include/rtv.h"
 
-t_vec rotate_x(t_vec vec, double a)
+t_vec	rotate_x(t_vec vec, double a)
 {
 	return (t_vec){
 			vec.x,
@@ -20,7 +20,8 @@ t_vec rotate_x(t_vec vec, double a)
 			vec.y * sin(a) + vec.z * cos(a)
 	};
 }
-t_vec rotate_y(t_vec vec, double a)
+
+t_vec	rotate_y(t_vec vec, double a)
 {
 	return (t_vec){
 			vec.x * cos(a) + vec.z * sin(a),
@@ -29,7 +30,7 @@ t_vec rotate_y(t_vec vec, double a)
 	};
 }
 
-t_vec rotate_z(t_vec vec, double a)
+t_vec	rotate_z(t_vec vec, double a)
 {
 	return (t_vec){
 			vec.x * cos(a) - vec.y * sin(a),

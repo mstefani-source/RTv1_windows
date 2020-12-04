@@ -15,9 +15,10 @@
 int		ft_fincolor(t_np np, t_object *f_obj, t_light *lt, t_object cl_o)
 {
 	double	l;
+	t_vec	temp;
 
 	l = 0.08;
-	t_vec temp = ft_vectorscale(&np.norm, 1e-4);
+	temp = ft_vectorscale(&np.norm, 1e-4);
 	np.pt = ft_vectoradd(&np.pt, &temp);
 	while (lt)
 	{
@@ -49,25 +50,27 @@ int		ft_traceray(t_vec *cam_pos, t_vec d_vec, t_object *objects, t_light *lt)
 
 int		ft_draw_scene(t_mlsdl *sdl, t_scene *rtv)
 {
-	double ax, ay, az;
-	t_vec direction;
+	t_vec	direction;
+	int		x;
+	int		y;
 
-	ax = 0 * M_PI / 180.;
-	ay = 15 * M_PI / 180.;
-	az = 10 * M_PI / 180.;
-	for (int x = (int)-rtv->wd / 2; x != rtv->wd / 2; x += 1)
+	x = (int)-rtv->wd / 2;
+	while (x < rtv->wd / 2)
 	{
-		for (int y = (int)-rtv->ht / 2; y != rtv->ht / 2; y += 1)
+		y = (int)-rtv->ht / 2;
+		while (y < rtv->ht / 2)
 		{
 			direction = (t_vec){x / rtv->ht, -y / rtv->ht, 1};
 			ft_vectornorm(&direction);
-			direction = rotate_x(direction, ax);
-			direction = rotate_y(direction, ay);
-			direction = rotate_z(direction, az);
+			direction = rotate_x(direction, rtv->angle.x * -M_PI / 180.);
+			direction = rotate_y(direction, rtv->angle.y * M_PI / 180.);
+			direction = rotate_z(direction, rtv->angle.z * M_PI / 180.);
 			sdl->data->pix[(x + (int)rtv->wd / 2) + (int)rtv->wd * \
 			(y + (int)rtv->ht / 2)] = ft_traceray(rtv->cam_pos, \
 			direction, rtv->objects, rtv->light);
+			y++;
 		}
+		x++;
 	}
 	return (0);
 }

@@ -12,10 +12,11 @@
 
 #include "../include/rtv.h"
 
-void 	free_obj(t_scene *rt)
+void	free_obj(t_scene *rt)
 {
 	t_object *tmp;
 	t_object *next;
+
 	tmp = rt->objects->next;
 	while (tmp)
 	{
@@ -26,13 +27,13 @@ void 	free_obj(t_scene *rt)
 	free(rt->objects);
 }
 
-void 	free_rt(t_scene *rt)
+void	free_rt(t_scene *rt)
 {
-	free_obj(rt);
-	free(rt->cam_pos);
-
 	t_light *tmp;
 	t_light *next;
+
+	free_obj(rt);
+	free(rt->cam_pos);
 	tmp = rt->light->next;
 	while (tmp)
 	{
@@ -51,7 +52,7 @@ int		main(int argc, char **argv)
 	if (argc == 1)
 	{
 		write(1, "No arguments\n", 13);
-		exit (0);
+		exit(0);
 	}
 	rtv = ft_parce_scene(argv[1]);
 	sdl = ft_init_window((int)rtv->wd, (int)rtv->ht);

@@ -56,7 +56,7 @@ t_solution		ft_intersecrayplan(t_vec *cam_pos, t_vec *d_vec, t_object *obj)
 	return (sol);
 }
 
-t_solution		ft_intersectcyl(t_vec *cam_pos, t_vec *d, t_object *obj)
+t_solution		ft_intersectcyl(t_vec *cam_pos, t_vec *d, t_object *ob)
 {
 	t_solution	sol;
 	t_vec		oc;
@@ -65,17 +65,17 @@ t_solution		ft_intersectcyl(t_vec *cam_pos, t_vec *d, t_object *obj)
 	double		k3;
 
 	sol = ft_initsol();
-	oc = ft_vectorsub(cam_pos, &obj->center);
-	k1 = ft_vdot(d, d) - ft_vdot(d, &(obj->n)) * ft_vdot(d, &(obj->n));
-	k2 = 2 * (ft_vdot(&oc, d) - ft_vdot(d, &(obj->n)) * ft_vdot(&oc, &(obj->n)));
-	k3 = ft_vdot(&oc, &oc) - pow(obj->radius, 2) - ft_vdot(&oc, &(obj->n)) \
-													* ft_vdot(&oc, &(obj->n));
+	oc = ft_vectorsub(cam_pos, &ob->center);
+	k1 = ft_vdot(d, d) - ft_vdot(d, &(ob->n)) * ft_vdot(d, &(ob->n));
+	k2 = 2 * (ft_vdot(&oc, d) - ft_vdot(d, &(ob->n)) * ft_vdot(&oc, &(ob->n)));
+	k3 = ft_vdot(&oc, &oc) - pow(ob->radius, 2) - ft_vdot(&oc, &(ob->n)) \
+													* ft_vdot(&oc, &(ob->n));
 	if ((pow(k2, 2) - 4 * k1 * k3) < 0)
 		return (sol);
 	sol.t1 = (-k2 + sqrt(pow(k2, 2) - 4 * k1 * k3)) / (2 * k1);
 	sol.t2 = (-k2 - sqrt(pow(k2, 2) - 4 * k1 * k3)) / (2 * k1);
 	sol = ft_biggest_sol(sol);
-	sol.color = obj->col;
+	sol.color = ob->col;
 	return (sol);
 }
 

@@ -56,8 +56,8 @@ t_vec	ft_vec(int i, char *line, t_vec vec, int type)
 	vec.i = i;
 	if (((type == 1) && (vec.x > 1 || vec.x < -1 || vec.y > 1 || vec.y < -1 \
 					|| vec.z > 1 || vec.z < -1)) || ((type == 3) && (vec.x < \
-						0 || vec.x > 360 || vec.y < 0 || vec.y > 360 || \
-						vec.z < 0 || vec.z > 360)))
+						-90 || vec.x > 90 || vec.y < -90 || vec.y > 90 || \
+						vec.z < -90 || vec.z > 90)))
 	{
 		write(1, "Error data\n", 11);
 		exit(0);

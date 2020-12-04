@@ -73,5 +73,5 @@ t_solution	ft_biggest_sol(t_solution sol)
 		if (sol.t1 < 0)
 			sol.t1 = INT_MAX;
 	}
-	return sol;
+	return (sol);
 }

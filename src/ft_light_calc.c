@@ -64,7 +64,7 @@ int				ft_check_shadow(t_vec p, t_light *l, t_object *objects)
 	{
 		sol = ft_getsol(p, vec_to_light, objects);
 		if (sol.t1 != INT_MAX && sol.t1 > 1e-4 && sol.t1 <= len_vec_to_light)
-			return 1;
+			return (1);
 		objects = objects->next;
 	}
 	return (0);

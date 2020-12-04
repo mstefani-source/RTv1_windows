@@ -8,6 +8,7 @@ SRC = src/rtv.c \
 	src/ft_intersect_figures.c \
 	src/ft_calc.c \
 	src/ft_atof.c \
+	src/ft_rotate_cam.c \
 	src/ft_parce_scene.c \
 	src/ft_pars_in_details.c \
 	src/ft_all_objects.c
