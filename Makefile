@@ -29,7 +29,7 @@ $(NAME): $(LIBOBJ) $(D_SDL)
 		make -C ./mlsdl
 		gcc $(CFLAGS) $(LIBOBJ) $(INCLUDES) -L./libft -L./mlsdl $(SDLFLAGS) -lft -lsdl -lm -lSDL2 -lSDL2_image -o $(NAME)
 %.o:%.c include/rtv.h
-		gcc -MD -g -O0 -c $<  -o $@
+		gcc -MD -g -c $<  -o $@
 
 clean:
 	make -C ./libft clean
