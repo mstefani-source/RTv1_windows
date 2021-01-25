@@ -8,6 +8,6 @@ RTv1_window <br/>
 2. run ./install.sh <br/>
 3. make <br/>
 ./RTv1 scene.rt <br/>
-enjoy
+enjoy<br/>
 ![.RTv1 mrt](/images/mrt.png)
 
