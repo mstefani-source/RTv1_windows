@@ -123,4 +123,4 @@ set(SOURCE_FILES
 add_executable(RTv1 ${SOURCE_FILES})
 
 target_link_libraries(${APP_NAME}
-        LINK_PUBLIC -lm -lSDL2 -lSDL2_image)
+        LINK_PUBLIC -lsdl -lm -lSDL2 -lSDL2_image)
